@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 7 Math Test – Operations on Rational Numbers</title>
+<style>
+  :root{
+    --green:#1f9d57; --green-dark:#157a42; --green-soft:#e8f6ee;
+    --ink:#1d2b24; --muted:#5f6f67; --line:#d5e3db; --bg:#f4f8f5; --card:#ffffff;
+    --red:#c8372d; --red-soft:#fdeceb; --amber:#f2b632;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  header{background:var(--green);color:#fff;padding:22px 16px 26px}
+  header .wrap{max-width:760px;margin:0 auto}
+  header h1{margin:0 0 4px;font-size:1.5rem}
+  header p{margin:0;opacity:.92;font-size:.95rem}
+  main{max-width:760px;margin:0 auto;padding:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+  h2.part{font-size:1.05rem;margin:18px 2px 10px;color:var(--green-dark)}
+  label.name{display:block;font-weight:600;margin-bottom:6px}
+  input[type=text]{width:100%;padding:11px 12px;font-size:1rem;border:1.5px solid var(--line);border-radius:8px}
+  input[type=text]:focus{outline:none;border-color:var(--green)}
+  .progress{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0 10px}
+  .bar{height:8px;background:#dde9e2;border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--green);transition:width .2s}
+  .progress small{color:var(--muted);display:block;margin-top:4px}
+  .q-head{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
+  .num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--green-soft);color:var(--green-dark);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+  .stem{font-size:1.1rem;padding-top:2px;line-height:2}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .opt{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;font-size:1.05rem;min-height:56px;background:#fff}
+  .opt:hover{border-color:var(--green)}
+  .opt input{position:absolute;opacity:0;pointer-events:none}
+  .opt .let{flex:none;width:26px;height:26px;border-radius:6px;border:1.5px solid var(--line);font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+  .opt.sel{border-color:var(--green);background:var(--green-soft)}
+  .opt.sel .let{background:var(--green);border-color:var(--green);color:#fff}
+  .opt:focus-within{box-shadow:0 0 0 3px rgba(31,157,87,.25)}
+  .done .opt{cursor:default}
+  .done .opt:hover{border-color:var(--line)}
+  .opt.right{border-color:var(--green)!important;background:var(--green-soft)}
+  .opt.right .let{background:var(--green);border-color:var(--green);color:#fff}
+  .opt.wrong{border-color:var(--red)!important;background:var(--red-soft)}
+  .opt.wrong .let{background:var(--red);border-color:var(--red);color:#fff}
+  .why{display:none;margin-top:10px;padding:10px 12px;border-radius:8px;background:#f6f9f7;border-left:4px solid var(--green);font-size:.95rem;line-height:1.9}
+  .why.bad{border-left-color:var(--red)}
+  .done .why{display:block}
+  .card.missing{border-color:var(--amber);box-shadow:0 0 0 3px rgba(242,182,50,.25)}
+  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.15;font-size:.9em;margin:0 3px;white-space:nowrap}
+  .frac b{font-weight:500;padding:0 4px}
+  .frac b:first-child{border-bottom:1.5px solid currentColor}
+  .m{white-space:nowrap}
+  .ov{text-decoration:overline}
+  sup{font-size:.7em;line-height:0}
+  .blank{display:inline-block;width:56px;border-bottom:1.5px solid #9bb3a6;vertical-align:baseline;margin:0 4px}
+  button{font:inherit;font-weight:600;border:0;border-radius:10px;padding:13px 20px;cursor:pointer}
+  .primary{background:var(--green);color:#fff;width:100%;font-size:1.05rem}
+  .primary:hover{background:var(--green-dark)}
+  .ghost{background:#fff;color:var(--green-dark);border:1.5px solid var(--green)}
+  .msg{color:var(--red);font-weight:600;margin:0 0 10px;display:none}
+  #result{display:none;text-align:center}
+  #result .score{font-size:2.6rem;font-weight:800;color:var(--green-dark);margin:4px 0}
+  #result .who{font-weight:600;font-size:1.1rem}
+  #result .note{color:var(--muted);margin:4px 0 14px}
+  .actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  a.primary,a.ghost{display:inline-block;text-decoration:none;border-radius:10px;padding:13px 20px;font-weight:600;text-align:center}
+  .send{border-top:1px solid var(--line);margin-top:16px;padding-top:14px}
+  .send .sendTitle{font-weight:700;margin:0 0 4px}
+  .send .sendHelp{color:var(--muted);font-size:.9rem;margin:0 0 12px}
+  .send .wa{background:#1fa855;margin-bottom:4px}
+  .send textarea{width:100%;margin-top:12px;padding:10px;font:inherit;font-size:.85rem;border:1.5px solid var(--line);border-radius:8px;background:#f6f9f7;color:var(--ink);resize:vertical}
+  .send .sendMsg{color:var(--green-dark);font-weight:600;font-size:.9rem;min-height:1.2em;margin:8px 0 0}
+  .req{color:var(--red)}
+  @media print{.send{display:none}}
+  footer{text-align:center;color:var(--muted);font-size:.8rem;padding:8px 16px 28px}
+  @media (max-width:420px){.opts{grid-template-columns:1fr}}
+  @media print{.progress,.actions,#submitCard{display:none}body{background:#fff}.card{break-inside:avoid}}
+
+  /* ---- v3: works without scripts (phone file preview) ---- */
+  main{counter-reset:sc an}
+  #quiz input:checked{counter-increment:an}
+  #quiz input[data-c]:checked{counter-increment:an sc}
+  .ch{display:block;position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .ch input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+  .ch input:checked + .opt{border-color:var(--green);background:var(--green-soft)}
+  .ch input:checked + .opt .let{background:var(--green);border-color:var(--green);color:#fff}
+  .ch input:focus + .opt{box-shadow:0 0 0 3px rgba(31,157,87,.25)}
+  .fin{position:absolute;opacity:0;width:1px;height:1px}
+  .graded .ch, #finish:checked ~ #quiz .ch{pointer-events:none;cursor:default}
+  .graded .ch input[data-c] + .opt, #finish:checked ~ #quiz .ch input[data-c] + .opt{border-color:var(--green);background:var(--green-soft)}
+  .graded .ch input[data-c] + .opt .let, #finish:checked ~ #quiz .ch input[data-c] + .opt .let{background:var(--green);border-color:var(--green);color:#fff}
+  .graded .ch input:checked:not([data-c]) + .opt, #finish:checked ~ #quiz .ch input:checked:not([data-c]) + .opt{border-color:var(--red);background:var(--red-soft)}
+  .graded .ch input:checked:not([data-c]) + .opt .let, #finish:checked ~ #quiz .ch input:checked:not([data-c]) + .opt .let{background:var(--red);border-color:var(--red);color:#fff}
+  .graded .why, #finish:checked ~ #quiz .why{display:block}
+  html:not(.js) .jsonly{display:none!important}
+  .js .nojs{display:none!important}
+  .notice{background:#fff8e6;border-color:#f2d58a;font-size:.95rem}
+  label.njBtn{display:block;text-align:center;border-radius:10px;padding:13px 20px;font-weight:600;cursor:pointer}
+  #finish:checked ~ #submitCard .njBtn{display:none}
+  #njResult{display:none;text-align:center}
+  #finish:checked ~ #njResult{display:block}
+  #njResult .score{font-size:2.6rem;font-weight:800;color:var(--green-dark);margin:4px 0}
+  #njResult .sc::before{content:counter(sc) " / 33"}
+  #njResult .an::before{content:counter(an) " of 33"}
+  #njResult p{margin:6px 0;color:var(--muted)}
+  #njResult input{margin:10px 0 4px;text-align:center}
+</style>
+<script>document.documentElement.className='js';</script>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Operations on Rational Numbers</h1>
+    <p>Grade 7 Math · Addition and Subtraction in ℚ · 33 multiple choice questions</p>
+  </div>
+</header>
+
+<main>
+  <div class="card notice nojs">You are viewing this test in preview mode. Answer the questions, tap <strong>Show my result</strong> at the end, then send a screenshot of your result to your teacher.</div>
+
+  <div class="card" id="result" aria-live="polite">
+    <div class="who" id="who"></div>
+    <div class="score" id="score"></div>
+    <div class="note" id="note"></div>
+    <div class="actions">
+      <button class="ghost" onclick="window.print()">Print / save result</button>
+      <button class="ghost" onclick="restart()">Try again</button>
+    </div>
+    <div class="send">
+      <p class="sendTitle">Send your result to your teacher</p>
+      <p class="sendHelp">Your name, score and answers are ready to send.</p>
+      <a class="primary wa" id="waBtn" href="#" target="_blank" rel="noopener">Send by WhatsApp</a>
+      <div class="actions">
+        <a class="ghost" id="mailBtn" href="#">Send by email</a>
+        <button class="ghost" id="shareBtn" onclick="shareResult()">Share another way</button>
+        <button class="ghost" onclick="copyResult()">Copy result</button>
+      </div>
+      <p class="sendMsg" id="sendMsg"></p>
+      <textarea id="report" rows="7" readonly aria-label="Result to send"></textarea>
+    </div>
+  </div>
+
+  <div class="card jsonly" id="nameCard">
+    <label class="name" for="student">Student name <span class="req">*</span></label>
+    <input type="text" id="student" placeholder="Write your name" autocomplete="off">
+  </div>
+
+  <div class="progress jsonly" id="progress">
+    <div class="bar"><i id="barFill"></i></div>
+    <small id="barText">0 of 33 answered</small>
+  </div>
+
+  <input type="checkbox" id="finish" class="fin" tabindex="-1" aria-hidden="true">
+
+  <div id="quiz">
+  <h2 class="part">Part 1 · Complete the following</h2>
+  <div class="card" id="q0"><div class="q-head"><div class="num">1</div><div class="stem"><span class="m"><span class="frac"><b>7</b><b>20</b></span> = </span><span class="blank"></span> %</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 1">
+    <label class="ch"><input type="radio" name="q0" value="0"><span class="opt"><span class="let">A</span><span>7</span></span></label>
+    <label class="ch"><input type="radio" name="q0" value="1"><span class="opt"><span class="let">B</span><span>20</span></span></label>
+    <label class="ch"><input type="radio" name="q0" value="2" data-c><span class="opt"><span class="let">C</span><span>35</span></span></label>
+    <label class="ch"><input type="radio" name="q0" value="3"><span class="opt"><span class="let">D</span><span>3.5</span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m"><span class="frac"><b>7</b><b>20</b></span> = <span class="frac"><b>35</b><b>100</b></span></span> = 35%.</div></div>
+  <div class="card" id="q1"><div class="q-head"><div class="num">2</div><div class="stem"><span class="m"><span class="frac"><b>21</b><b>1000</b></span> = </span><span class="blank"></span> %</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 2">
+    <label class="ch"><input type="radio" name="q1" value="0"><span class="opt"><span class="let">A</span><span>21</span></span></label>
+    <label class="ch"><input type="radio" name="q1" value="1" data-c><span class="opt"><span class="let">B</span><span>2.1</span></span></label>
+    <label class="ch"><input type="radio" name="q1" value="2"><span class="opt"><span class="let">C</span><span>0.21</span></span></label>
+    <label class="ch"><input type="radio" name="q1" value="3"><span class="opt"><span class="let">D</span><span>0.021</span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m"><span class="frac"><b>21</b><b>1000</b></span> = <span class="frac"><b>2.1</b><b>100</b></span></span> = 2.1%.</div></div>
+  <div class="card" id="q2"><div class="q-head"><div class="num">3</div><div class="stem"><span class="m">| −0.4 | = </span><span class="blank"></span> %</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 3">
+    <label class="ch"><input type="radio" name="q2" value="0"><span class="opt"><span class="let">A</span><span>−40</span></span></label>
+    <label class="ch"><input type="radio" name="q2" value="1"><span class="opt"><span class="let">B</span><span>4</span></span></label>
+    <label class="ch"><input type="radio" name="q2" value="2"><span class="opt"><span class="let">C</span><span>0.4</span></span></label>
+    <label class="ch"><input type="radio" name="q2" value="3" data-c><span class="opt"><span class="let">D</span><span>40</span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong><span class="m">| −0.4 | = 0.4 = <span class="frac"><b>40</b><b>100</b></span></span> = 40%.</div></div>
+  <div class="card" id="q3"><div class="q-head"><div class="num">4</div><div class="stem">If <span class="m"><span class="frac"><b>5</b><b>a</b></span></span> is a rational number, then <span class="m">a ≠</span> <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 4">
+    <label class="ch"><input type="radio" name="q3" value="0"><span class="opt"><span class="let">A</span><span>5</span></span></label>
+    <label class="ch"><input type="radio" name="q3" value="1" data-c><span class="opt"><span class="let">B</span><span>0</span></span></label>
+    <label class="ch"><input type="radio" name="q3" value="2"><span class="opt"><span class="let">C</span><span>1</span></span></label>
+    <label class="ch"><input type="radio" name="q3" value="3"><span class="opt"><span class="let">D</span><span>−5</span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong>The denominator of a rational number can never be zero.</div></div>
+  <div class="card" id="q4"><div class="q-head"><div class="num">5</div><div class="stem"><span class="m">0.<span class="ov">2</span> = </span><span class="blank"></span> (in the form of <span class="frac"><b>a</b><b>b</b></span>)</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 5">
+    <label class="ch"><input type="radio" name="q4" value="0"><span class="opt"><span class="let">A</span><span><span class="m"><span class="frac"><b>2</b><b>10</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q4" value="1"><span class="opt"><span class="let">B</span><span><span class="m"><span class="frac"><b>1</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q4" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m"><span class="frac"><b>2</b><b>9</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q4" value="3"><span class="opt"><span class="let">D</span><span><span class="m"><span class="frac"><b>2</b><b>99</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong>One repeating digit goes over 9: <span class="m">0.<span class="ov">2</span> = <span class="frac"><b>2</b><b>9</b></span></span>.</div></div>
+  <div class="card" id="q5"><div class="q-head"><div class="num">6</div><div class="stem"><span class="m">0.<span class="ov">123</span> = </span><span class="blank"></span> (in the form of <span class="frac"><b>a</b><b>b</b></span>)</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 6">
+    <label class="ch"><input type="radio" name="q5" value="0"><span class="opt"><span class="let">A</span><span><span class="m"><span class="frac"><b>123</b><b>1000</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q5" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m"><span class="frac"><b>41</b><b>333</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q5" value="2"><span class="opt"><span class="let">C</span><span><span class="m"><span class="frac"><b>123</b><b>990</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q5" value="3"><span class="opt"><span class="let">D</span><span><span class="m"><span class="frac"><b>41</b><b>300</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong>Three repeating digits go over 999: <span class="m"><span class="frac"><b>123</b><b>999</b></span> = <span class="frac"><b>41</b><b>333</b></span></span>.</div></div>
+  <div class="card" id="q6"><div class="q-head"><div class="num">7</div><div class="stem"><span class="m">0.3<span class="ov">28</span> = </span><span class="blank"></span> (in the form of <span class="frac"><b>a</b><b>b</b></span>)</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 7">
+    <label class="ch"><input type="radio" name="q6" value="0"><span class="opt"><span class="let">A</span><span><span class="m"><span class="frac"><b>328</b><b>999</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q6" value="1"><span class="opt"><span class="let">B</span><span><span class="m"><span class="frac"><b>41</b><b>125</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q6" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m"><span class="frac"><b>65</b><b>198</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q6" value="3"><span class="opt"><span class="let">D</span><span><span class="m"><span class="frac"><b>325</b><b>999</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m"><span class="frac"><b>328 − 3</b><b>990</b></span> = <span class="frac"><b>325</b><b>990</b></span> = <span class="frac"><b>65</b><b>198</b></span></span>.</div></div>
+  <div class="card" id="q7"><div class="q-head"><div class="num">8</div><div class="stem"><span class="m"><span class="frac"><b>5</b><b>8</b></span> = </span><span class="blank"></span> (in the decimal form)</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 8">
+    <label class="ch"><input type="radio" name="q7" value="0"><span class="opt"><span class="let">A</span><span>0.58</span></span></label>
+    <label class="ch"><input type="radio" name="q7" value="1" data-c><span class="opt"><span class="let">B</span><span>0.625</span></span></label>
+    <label class="ch"><input type="radio" name="q7" value="2"><span class="opt"><span class="let">C</span><span>1.6</span></span></label>
+    <label class="ch"><input type="radio" name="q7" value="3"><span class="opt"><span class="let">D</span><span>0.85</span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m">5 ÷ 8 = 0.625</span>.</div></div>
+  <div class="card" id="q8"><div class="q-head"><div class="num">9</div><div class="stem"><span class="m"><span class="frac"><b>7</b><b>20</b></span> = </span><span class="blank"></span> (in the decimal form)</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 9">
+    <label class="ch"><input type="radio" name="q8" value="0" data-c><span class="opt"><span class="let">A</span><span>0.35</span></span></label>
+    <label class="ch"><input type="radio" name="q8" value="1"><span class="opt"><span class="let">B</span><span>0.72</span></span></label>
+    <label class="ch"><input type="radio" name="q8" value="2"><span class="opt"><span class="let">C</span><span>0.035</span></span></label>
+    <label class="ch"><input type="radio" name="q8" value="3"><span class="opt"><span class="let">D</span><span>3.5</span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong><span class="m"><span class="frac"><b>7</b><b>20</b></span> = <span class="frac"><b>35</b><b>100</b></span> = 0.35</span>.</div></div>
+  <div class="card" id="q9"><div class="q-head"><div class="num">10</div><div class="stem"><span class="m"><span class="frac"><b>1</b><b>3</b></span> = </span><span class="blank"></span> (in the decimal form)</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 10">
+    <label class="ch"><input type="radio" name="q9" value="0"><span class="opt"><span class="let">A</span><span>0.3</span></span></label>
+    <label class="ch"><input type="radio" name="q9" value="1"><span class="opt"><span class="let">B</span><span>0.33</span></span></label>
+    <label class="ch"><input type="radio" name="q9" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m">0.<span class="ov">3</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q9" value="3"><span class="opt"><span class="let">D</span><span>1.3</span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m">1 ÷ 3 = 0.333…</span>, a repeating decimal written <span class="m">0.<span class="ov">3</span></span>.</div></div>
+  <div class="card" id="q10"><div class="q-head"><div class="num">11</div><div class="stem">The additive identity in ℚ is <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 11">
+    <label class="ch"><input type="radio" name="q10" value="0"><span class="opt"><span class="let">A</span><span>1</span></span></label>
+    <label class="ch"><input type="radio" name="q10" value="1" data-c><span class="opt"><span class="let">B</span><span>0</span></span></label>
+    <label class="ch"><input type="radio" name="q10" value="2"><span class="opt"><span class="let">C</span><span>−1</span></span></label>
+    <label class="ch"><input type="radio" name="q10" value="3"><span class="opt"><span class="let">D</span><span><span class="m"><span class="frac"><b>1</b><b>2</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong>Adding zero to any rational number leaves it unchanged.</div></div>
+  <div class="card" id="q11"><div class="q-head"><div class="num">12</div><div class="stem">The additive inverse of <span class="m"><span class="frac"><b>3</b><b>7</b></span></span> is <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 12">
+    <label class="ch"><input type="radio" name="q11" value="0"><span class="opt"><span class="let">A</span><span><span class="m"><span class="frac"><b>7</b><b>3</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q11" value="1"><span class="opt"><span class="let">B</span><span><span class="m">−<span class="frac"><b>7</b><b>3</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q11" value="2"><span class="opt"><span class="let">C</span><span><span class="m"><span class="frac"><b>3</b><b>7</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q11" value="3" data-c><span class="opt"><span class="let">D</span><span><span class="m">−<span class="frac"><b>3</b><b>7</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong><span class="m"><span class="frac"><b>3</b><b>7</b></span> + (−<span class="frac"><b>3</b><b>7</b></span>) = 0</span>.</div></div>
+  <div class="card" id="q12"><div class="q-head"><div class="num">13</div><div class="stem">The additive inverse of <span class="m">−<span class="frac"><b>4</b><b>9</b></span></span> is <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 13">
+    <label class="ch"><input type="radio" name="q12" value="0" data-c><span class="opt"><span class="let">A</span><span><span class="m"><span class="frac"><b>4</b><b>9</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q12" value="1"><span class="opt"><span class="let">B</span><span><span class="m">−<span class="frac"><b>4</b><b>9</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q12" value="2"><span class="opt"><span class="let">C</span><span><span class="m"><span class="frac"><b>9</b><b>4</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q12" value="3"><span class="opt"><span class="let">D</span><span><span class="m">−<span class="frac"><b>9</b><b>4</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong>Change the sign: <span class="m">−<span class="frac"><b>4</b><b>9</b></span> + <span class="frac"><b>4</b><b>9</b></span> = 0</span>.</div></div>
+  <div class="card" id="q13"><div class="q-head"><div class="num">14</div><div class="stem">The additive inverse of <span class="m">−2.3</span> is <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 14">
+    <label class="ch"><input type="radio" name="q13" value="0"><span class="opt"><span class="let">A</span><span>−2.3</span></span></label>
+    <label class="ch"><input type="radio" name="q13" value="1"><span class="opt"><span class="let">B</span><span>3.2</span></span></label>
+    <label class="ch"><input type="radio" name="q13" value="2" data-c><span class="opt"><span class="let">C</span><span>2.3</span></span></label>
+    <label class="ch"><input type="radio" name="q13" value="3"><span class="opt"><span class="let">D</span><span>−3.2</span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m">−2.3 + 2.3 = 0</span>.</div></div>
+  <div class="card" id="q14"><div class="q-head"><div class="num">15</div><div class="stem"><span class="m"><span class="frac"><b>−6</b><b>−11</b></span></span> is the additive inverse of <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 15">
+    <label class="ch"><input type="radio" name="q14" value="0"><span class="opt"><span class="let">A</span><span><span class="m"><span class="frac"><b>6</b><b>11</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q14" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m">−<span class="frac"><b>6</b><b>11</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q14" value="2"><span class="opt"><span class="let">C</span><span><span class="m"><span class="frac"><b>11</b><b>6</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q14" value="3"><span class="opt"><span class="let">D</span><span><span class="m">−<span class="frac"><b>11</b><b>6</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m"><span class="frac"><b>−6</b><b>−11</b></span> = <span class="frac"><b>6</b><b>11</b></span></span>, which is the additive inverse of <span class="m">−<span class="frac"><b>6</b><b>11</b></span></span>.</div></div>
+  <div class="card" id="q15"><div class="q-head"><div class="num">16</div><div class="stem">The additive inverse of <span class="m">(−2)<sup>3</sup></span> is <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 16">
+    <label class="ch"><input type="radio" name="q15" value="0"><span class="opt"><span class="let">A</span><span>−8</span></span></label>
+    <label class="ch"><input type="radio" name="q15" value="1"><span class="opt"><span class="let">B</span><span>6</span></span></label>
+    <label class="ch"><input type="radio" name="q15" value="2"><span class="opt"><span class="let">C</span><span>−6</span></span></label>
+    <label class="ch"><input type="radio" name="q15" value="3" data-c><span class="opt"><span class="let">D</span><span>8</span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong><span class="m">(−2)<sup>3</sup> = −8</span>, and its additive inverse is 8.</div></div>
+  <div class="card" id="q16"><div class="q-head"><div class="num">17</div><div class="stem">The additive inverse of <span class="m">| −<span class="frac"><b>4</b><b>5</b></span> |</span> is <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 17">
+    <label class="ch"><input type="radio" name="q16" value="0"><span class="opt"><span class="let">A</span><span><span class="m"><span class="frac"><b>4</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q16" value="1"><span class="opt"><span class="let">B</span><span><span class="m"><span class="frac"><b>5</b><b>4</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q16" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m">−<span class="frac"><b>4</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q16" value="3"><span class="opt"><span class="let">D</span><span><span class="m">−<span class="frac"><b>5</b><b>4</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m">| −<span class="frac"><b>4</b><b>5</b></span> | = <span class="frac"><b>4</b><b>5</b></span></span>, and its additive inverse is <span class="m">−<span class="frac"><b>4</b><b>5</b></span></span>.</div></div>
+  <div class="card" id="q17"><div class="q-head"><div class="num">18</div><div class="stem">The additive inverse of zero is <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 18">
+    <label class="ch"><input type="radio" name="q17" value="0"><span class="opt"><span class="let">A</span><span>1</span></span></label>
+    <label class="ch"><input type="radio" name="q17" value="1"><span class="opt"><span class="let">B</span><span>−1</span></span></label>
+    <label class="ch"><input type="radio" name="q17" value="2" data-c><span class="opt"><span class="let">C</span><span>0</span></span></label>
+    <label class="ch"><input type="radio" name="q17" value="3"><span class="opt"><span class="let">D</span><span>it has no additive inverse</span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m">0 + 0 = 0</span>, so zero is its own additive inverse.</div></div>
+  <h2 class="part">Part 2 · Find the result</h2>
+  <div class="card" id="q18"><div class="q-head"><div class="num">19</div><div class="stem">Find the result: <span class="m"><span class="frac"><b>2</b><b>7</b></span> + <span class="frac"><b>3</b><b>7</b></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 19">
+    <label class="ch"><input type="radio" name="q18" value="0"><span class="opt"><span class="let">A</span><span><span class="m"><span class="frac"><b>5</b><b>14</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q18" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m"><span class="frac"><b>5</b><b>7</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q18" value="2"><span class="opt"><span class="let">C</span><span><span class="m"><span class="frac"><b>6</b><b>49</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q18" value="3"><span class="opt"><span class="let">D</span><span><span class="m"><span class="frac"><b>1</b><b>7</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong>Same denominator, so add the numerators: <span class="m"><span class="frac"><b>2 + 3</b><b>7</b></span> = <span class="frac"><b>5</b><b>7</b></span></span>.</div></div>
+  <div class="card" id="q19"><div class="q-head"><div class="num">20</div><div class="stem">Find the result: <span class="m"><span class="frac"><b>5</b><b>8</b></span> + (<span class="frac"><b>−7</b><b>8</b></span>)</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 20">
+    <label class="ch"><input type="radio" name="q19" value="0" data-c><span class="opt"><span class="let">A</span><span><span class="m">−<span class="frac"><b>1</b><b>4</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q19" value="1"><span class="opt"><span class="let">B</span><span><span class="m"><span class="frac"><b>1</b><b>4</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q19" value="2"><span class="opt"><span class="let">C</span><span><span class="m"><span class="frac"><b>3</b><b>2</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q19" value="3"><span class="opt"><span class="let">D</span><span><span class="m">−<span class="frac"><b>3</b><b>2</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong><span class="m"><span class="frac"><b>5 − 7</b><b>8</b></span> = <span class="frac"><b>−2</b><b>8</b></span> = −<span class="frac"><b>1</b><b>4</b></span></span>.</div></div>
+  <div class="card" id="q20"><div class="q-head"><div class="num">21</div><div class="stem">Find the result: <span class="m"><span class="frac"><b>5</b><b>9</b></span> + | −<span class="frac"><b>4</b><b>9</b></span> |</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 21">
+    <label class="ch"><input type="radio" name="q20" value="0"><span class="opt"><span class="let">A</span><span><span class="m"><span class="frac"><b>1</b><b>9</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q20" value="1"><span class="opt"><span class="let">B</span><span><span class="m">−<span class="frac"><b>1</b><b>9</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q20" value="2" data-c><span class="opt"><span class="let">C</span><span>1</span></span></label>
+    <label class="ch"><input type="radio" name="q20" value="3"><span class="opt"><span class="let">D</span><span><span class="m"><span class="frac"><b>1</b><b>2</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m">| −<span class="frac"><b>4</b><b>9</b></span> | = <span class="frac"><b>4</b><b>9</b></span></span>, so <span class="m"><span class="frac"><b>5</b><b>9</b></span> + <span class="frac"><b>4</b><b>9</b></span> = <span class="frac"><b>9</b><b>9</b></span> = 1</span>.</div></div>
+  <div class="card" id="q21"><div class="q-head"><div class="num">22</div><div class="stem">Find the result: <span class="m">−3.2 + (−1.<span class="ov">3</span>)</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 22">
+    <label class="ch"><input type="radio" name="q21" value="0"><span class="opt"><span class="let">A</span><span>−4.5</span></span></label>
+    <label class="ch"><input type="radio" name="q21" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m">−4<span class="frac"><b>8</b><b>15</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q21" value="2"><span class="opt"><span class="let">C</span><span><span class="m">−1<span class="frac"><b>13</b><b>15</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q21" value="3"><span class="opt"><span class="let">D</span><span><span class="m">4<span class="frac"><b>8</b><b>15</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m">−<span class="frac"><b>16</b><b>5</b></span> + (−<span class="frac"><b>4</b><b>3</b></span>) = −<span class="frac"><b>48 + 20</b><b>15</b></span> = −<span class="frac"><b>68</b><b>15</b></span> = </span><span class="m">−4<span class="frac"><b>8</b><b>15</b></span></span>.</div></div>
+  <div class="card" id="q22"><div class="q-head"><div class="num">23</div><div class="stem">Find the result: <span class="m"><span class="frac"><b>1</b><b>4</b></span> + (−<span class="frac"><b>1</b><b>3</b></span>)</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 23">
+    <label class="ch"><input type="radio" name="q22" value="0"><span class="opt"><span class="let">A</span><span><span class="m"><span class="frac"><b>1</b><b>12</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q22" value="1"><span class="opt"><span class="let">B</span><span><span class="m"><span class="frac"><b>7</b><b>12</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q22" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m">−<span class="frac"><b>1</b><b>12</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q22" value="3"><span class="opt"><span class="let">D</span><span><span class="m">−<span class="frac"><b>7</b><b>12</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m"><span class="frac"><b>3</b><b>12</b></span> − <span class="frac"><b>4</b><b>12</b></span> = −<span class="frac"><b>1</b><b>12</b></span></span>.</div></div>
+  <div class="card" id="q23"><div class="q-head"><div class="num">24</div><div class="stem">Find the result: <span class="m">−<span class="frac"><b>2</b><b>5</b></span> − <span class="frac"><b>3</b><b>15</b></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 24">
+    <label class="ch"><input type="radio" name="q23" value="0"><span class="opt"><span class="let">A</span><span><span class="m">−<span class="frac"><b>1</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q23" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m">−<span class="frac"><b>3</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q23" value="2"><span class="opt"><span class="let">C</span><span><span class="m"><span class="frac"><b>1</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q23" value="3"><span class="opt"><span class="let">D</span><span><span class="m">−<span class="frac"><b>1</b><b>4</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m"><span class="frac"><b>3</b><b>15</b></span> = <span class="frac"><b>1</b><b>5</b></span></span>, so <span class="m">−<span class="frac"><b>2</b><b>5</b></span> − <span class="frac"><b>1</b><b>5</b></span> = −<span class="frac"><b>3</b><b>5</b></span></span>.</div></div>
+  <div class="card" id="q24"><div class="q-head"><div class="num">25</div><div class="stem">Find the result: <span class="m"><span class="frac"><b>7</b><b>25</b></span> − 0.12</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 25">
+    <label class="ch"><input type="radio" name="q24" value="0" data-c><span class="opt"><span class="let">A</span><span><span class="m"><span class="frac"><b>4</b><b>25</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q24" value="1"><span class="opt"><span class="let">B</span><span><span class="m"><span class="frac"><b>2</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q24" value="2"><span class="opt"><span class="let">C</span><span><span class="m"><span class="frac"><b>16</b><b>25</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q24" value="3"><span class="opt"><span class="let">D</span><span><span class="m">−<span class="frac"><b>4</b><b>25</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong><span class="m">0.28 − 0.12 = 0.16 = <span class="frac"><b>16</b><b>100</b></span> = <span class="frac"><b>4</b><b>25</b></span></span>.</div></div>
+  <div class="card" id="q25"><div class="q-head"><div class="num">26</div><div class="stem">Find the result: <span class="m">−<span class="frac"><b>15</b><b>18</b></span> + <span class="frac"><b>12</b><b>16</b></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 26">
+    <label class="ch"><input type="radio" name="q25" value="0"><span class="opt"><span class="let">A</span><span><span class="m"><span class="frac"><b>1</b><b>12</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q25" value="1"><span class="opt"><span class="let">B</span><span><span class="m">−<span class="frac"><b>3</b><b>34</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q25" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m">−<span class="frac"><b>1</b><b>12</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q25" value="3"><span class="opt"><span class="let">D</span><span><span class="m"><span class="frac"><b>19</b><b>12</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong>Simplify first: <span class="m">−<span class="frac"><b>5</b><b>6</b></span> + <span class="frac"><b>3</b><b>4</b></span> = <span class="frac"><b>−10 + 9</b><b>12</b></span> = −<span class="frac"><b>1</b><b>12</b></span></span>.</div></div>
+  <div class="card" id="q26"><div class="q-head"><div class="num">27</div><div class="stem">Find the result: <span class="m"><span class="frac"><b>3</b><b>7</b></span> − (−<span class="frac"><b>2</b><b>5</b></span>)</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 27">
+    <label class="ch"><input type="radio" name="q26" value="0"><span class="opt"><span class="let">A</span><span><span class="m"><span class="frac"><b>1</b><b>35</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q26" value="1"><span class="opt"><span class="let">B</span><span><span class="m"><span class="frac"><b>5</b><b>12</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q26" value="2"><span class="opt"><span class="let">C</span><span><span class="m">−<span class="frac"><b>1</b><b>35</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q26" value="3" data-c><span class="opt"><span class="let">D</span><span><span class="m"><span class="frac"><b>29</b><b>35</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong>Subtracting a negative means adding: <span class="m"><span class="frac"><b>15</b><b>35</b></span> + <span class="frac"><b>14</b><b>35</b></span> = <span class="frac"><b>29</b><b>35</b></span></span>.</div></div>
+  <div class="card" id="q27"><div class="q-head"><div class="num">28</div><div class="stem">Find the result: <span class="m"><span class="frac"><b>1</b><b>4</b></span> + </span><span class="m">2<span class="frac"><b>3</b><b>8</b></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 28">
+    <label class="ch"><input type="radio" name="q27" value="0"><span class="opt"><span class="let">A</span><span><span class="m">2<span class="frac"><b>1</b><b>3</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q27" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m">2<span class="frac"><b>5</b><b>8</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q27" value="2"><span class="opt"><span class="let">C</span><span><span class="m">2<span class="frac"><b>1</b><b>8</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q27" value="3"><span class="opt"><span class="let">D</span><span><span class="m">3<span class="frac"><b>5</b><b>8</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m"><span class="frac"><b>2</b><b>8</b></span> + </span><span class="m">2<span class="frac"><b>3</b><b>8</b></span></span> = <span class="m">2<span class="frac"><b>5</b><b>8</b></span></span>.</div></div>
+  <div class="card" id="q28"><div class="q-head"><div class="num">29</div><div class="stem">Find the result: <span class="m">3<span class="frac"><b>1</b><b>6</b></span></span><span class="m"> − </span><span class="m">6<span class="frac"><b>2</b><b>3</b></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 29">
+    <label class="ch"><input type="radio" name="q28" value="0" data-c><span class="opt"><span class="let">A</span><span><span class="m">−3<span class="frac"><b>1</b><b>2</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q28" value="1"><span class="opt"><span class="let">B</span><span><span class="m">3<span class="frac"><b>1</b><b>2</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q28" value="2"><span class="opt"><span class="let">C</span><span><span class="m">−3<span class="frac"><b>1</b><b>6</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q28" value="3"><span class="opt"><span class="let">D</span><span><span class="m">−9<span class="frac"><b>5</b><b>6</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong><span class="m"><span class="frac"><b>19</b><b>6</b></span> − <span class="frac"><b>40</b><b>6</b></span> = −<span class="frac"><b>21</b><b>6</b></span> = </span><span class="m">−3<span class="frac"><b>1</b><b>2</b></span></span>.</div></div>
+  <div class="card" id="q29"><div class="q-head"><div class="num">30</div><div class="stem">Find the result: <span class="m">2<span class="frac"><b>3</b><b>5</b></span></span><span class="m"> − <span class="frac"><b>1</b><b>2</b></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 30">
+    <label class="ch"><input type="radio" name="q29" value="0"><span class="opt"><span class="let">A</span><span><span class="m">2<span class="frac"><b>2</b><b>3</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q29" value="1"><span class="opt"><span class="let">B</span><span><span class="m">1<span class="frac"><b>1</b><b>10</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q29" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m">2<span class="frac"><b>1</b><b>10</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q29" value="3"><span class="opt"><span class="let">D</span><span><span class="m">3<span class="frac"><b>1</b><b>10</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m">2.6 − 0.5 = 2.1 = </span><span class="m">2<span class="frac"><b>1</b><b>10</b></span></span>.</div></div>
+  <div class="card" id="q30"><div class="q-head"><div class="num">31</div><div class="stem">Find the result: <span class="m">−2.125 + 2.6 + (</span><span class="m">−7<span class="frac"><b>21</b><b>24</b></span></span>)</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 31">
+    <label class="ch"><input type="radio" name="q30" value="0"><span class="opt"><span class="let">A</span><span><span class="m">7<span class="frac"><b>2</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q30" value="1"><span class="opt"><span class="let">B</span><span><span class="m">−12<span class="frac"><b>3</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q30" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m">−7<span class="frac"><b>2</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q30" value="3"><span class="opt"><span class="let">D</span><span><span class="m">−7<span class="frac"><b>3</b><b>5</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m">−7<span class="frac"><b>21</b><b>24</b></span></span><span class="m"> = −7.875</span>. Then <span class="m">−2.125 − 7.875 = −10</span>, and <span class="m">−10 + 2.6 = −7.4 = </span><span class="m">−7<span class="frac"><b>2</b><b>5</b></span></span>.</div></div>
+  <div class="card" id="q31"><div class="q-head"><div class="num">32</div><div class="stem">Find the result: <span class="m">60% + <span class="frac"><b>3</b><b>10</b></span> − 0.14</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 32">
+    <label class="ch"><input type="radio" name="q31" value="0"><span class="opt"><span class="let">A</span><span>0.86</span></span></label>
+    <label class="ch"><input type="radio" name="q31" value="1"><span class="opt"><span class="let">B</span><span>1.04</span></span></label>
+    <label class="ch"><input type="radio" name="q31" value="2"><span class="opt"><span class="let">C</span><span>7.6</span></span></label>
+    <label class="ch"><input type="radio" name="q31" value="3" data-c><span class="opt"><span class="let">D</span><span>0.76</span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong><span class="m">0.6 + 0.3 − 0.14 = 0.76</span>, which is <span class="m"><span class="frac"><b>19</b><b>25</b></span></span>.</div></div>
+  <div class="card" id="q32"><div class="q-head"><div class="num">33</div><div class="stem">Find the result: <span class="m"><span class="frac"><b>2</b><b>3</b></span> − 0.<span class="ov">3</span> + 2</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 33">
+    <label class="ch"><input type="radio" name="q32" value="0"><span class="opt"><span class="let">A</span><span>3</span></span></label>
+    <label class="ch"><input type="radio" name="q32" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m">2<span class="frac"><b>1</b><b>3</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q32" value="2"><span class="opt"><span class="let">C</span><span><span class="m">2<span class="frac"><b>2</b><b>3</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q32" value="3"><span class="opt"><span class="let">D</span><span><span class="m">1<span class="frac"><b>2</b><b>3</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m">0.<span class="ov">3</span> = <span class="frac"><b>1</b><b>3</b></span></span>, so <span class="m"><span class="frac"><b>2</b><b>3</b></span> − <span class="frac"><b>1</b><b>3</b></span> + 2 = </span><span class="m">2<span class="frac"><b>1</b><b>3</b></span></span>.</div></div>
+  </div>
+
+  <div class="card nojs" id="njResult">
+    <div class="who">Your result</div>
+    <div class="score"><span class="sc"></span></div>
+    <p>Answered: <span class="an"></span></p>
+    <input type="text" placeholder="Write your name here" autocomplete="off" aria-label="Student name">
+    <p><strong>Take a screenshot of this result and send it to your teacher.</strong></p>
+    <p>Green shows the correct answer. Red shows a wrong choice.</p>
+  </div>
+
+  <div class="card" id="submitCard">
+    <p class="msg" id="msg"></p>
+    <button class="primary jsonly" onclick="submitTest()">Submit my answers</button>
+    <label for="finish" class="primary njBtn nojs">Show my result</label>
+  </div>
+</main>
+<footer>Choose the correct answer for each question, press Submit, then send your result to your teacher.</footer>
+
+<script>
+/* ---- teacher settings: fill these in to receive results directly ---- */
+var TEACHER_WHATSAPP='';   // digits only with country code, e.g. 9665XXXXXXXX (leave empty: student picks the chat)
+var TEACHER_EMAIL='';      // e.g. teacher@example.com
+var TEST_TITLE='Grade 7 - Operations on Rational Numbers';
+
+var L=['A','B','C','D'], finished=false, attempt=1, reportText='';
+var quiz=document.getElementById('quiz');
+var cards=quiz.querySelectorAll('.card'), N=cards.length;
+
+function inputsOf(i){return cards[i].querySelectorAll('input');}
+function pickedOf(i){var a=inputsOf(i),k;for(k=0;k<a.length;k++){if(a[k].checked)return k;}return -1;}
+function correctOf(i){var a=inputsOf(i),k;for(k=0;k<a.length;k++){if(a[k].hasAttribute('data-c'))return k;}return -1;}
+
+function updateBar(){
+  var c=0,i;
+  for(i=0;i<N;i++){if(pickedOf(i)>=0){c++;cards[i].classList.remove('missing');}}
+  document.getElementById('barFill').style.width=(c/N*100)+'%';
+  document.getElementById('barText').textContent=c+' of '+N+' answered';
+}
+quiz.addEventListener('change',updateBar);
+
+function submitTest(){
+  var msg=document.getElementById('msg'), first=-1, left=0, i;
+  var nameEl=document.getElementById('student');
+  if(!nameEl.value.replace(/\s/g,'')){
+    msg.textContent='Please write your name before submitting.';
+    msg.style.display='block';
+    window.scrollTo(0,0); nameEl.focus();
+    return;
+  }
+  for(i=0;i<N;i++){
+    var miss=pickedOf(i)<0;
+    cards[i].classList.toggle('missing',miss);
+    if(miss){left++; if(first<0)first=i;}
+  }
+  if(left){
+    msg.textContent='You still have '+left+' question'+(left>1?'s':'')+' to answer.';
+    msg.style.display='block';
+    cards[first].scrollIntoView();
+    return;
+  }
+  msg.style.display='none';
+  finished=true;
+  var score=0, parts=[];
+  for(i=0;i<N;i++){
+    var p=pickedOf(i), c=correctOf(i), ok=p===c; if(ok)score++;
+    var w=cards[i].querySelector('.why');
+    w.classList.toggle('bad',!ok);
+    w.querySelector('.pre').textContent=ok?'Correct. ':'Correct answer: '+L[c]+'. ';
+    parts.push((i+1)+L[p]+(ok?'\u2713':'\u2717('+L[c]+')'));
+  }
+  quiz.classList.add('graded');
+  var pct=Math.round(score/N*100);
+  var name=nameEl.value.replace(/^\s+|\s+$/g,'');
+  document.getElementById('who').textContent=name;
+  document.getElementById('score').textContent=score+' / '+N+'  ('+pct+'%)';
+  document.getElementById('note').textContent=
+    pct===100?'Excellent! Full marks.':
+    pct>=80?'Very good work. Check the questions marked in red.':
+    pct>=50?'Good try. Read the explanations and try again.':
+    'Keep practising. Read each explanation below, then try again.';
+  buildReport(score,pct,name,parts);
+  document.getElementById('result').style.display='block';
+  document.getElementById('submitCard').style.display='none';
+  document.getElementById('progress').style.display='none';
+  window.scrollTo(0,0);
+}
+
+function restart(){
+  var all=quiz.querySelectorAll('input'), k;
+  for(k=0;k<all.length;k++){all[k].checked=false;}
+  finished=false; attempt++;
+  quiz.classList.remove('graded');
+  updateBar();
+  document.getElementById('result').style.display='none';
+  document.getElementById('submitCard').style.display='block';
+  document.getElementById('progress').style.display='block';
+  window.scrollTo(0,0);
+}
+
+function buildReport(score,pct,name,parts){
+  var d=new Date();
+  reportText=TEST_TITLE+'\nStudent: '+name+'\nScore: '+score+' / '+N+' ('+pct+'%)\nAttempt: '+attempt+
+    '\nDate: '+d.toLocaleDateString()+' '+d.toLocaleTimeString()+'\nAnswers: '+parts.join('  ');
+  document.getElementById('report').value=reportText;
+  var enc=encodeURIComponent(reportText);
+  document.getElementById('waBtn').href='https://wa.me/'+TEACHER_WHATSAPP.replace(/\D/g,'')+'?text='+enc;
+  document.getElementById('mailBtn').href='mailto:'+TEACHER_EMAIL+'?subject='+encodeURIComponent(TEST_TITLE+' - '+name)+'&body='+enc;
+  document.getElementById('shareBtn').style.display=navigator.share?'':'none';
+  document.getElementById('sendMsg').textContent='';
+}
+function shareResult(){
+  if(navigator.share){navigator.share({title:TEST_TITLE,text:reportText}).then(function(){},function(){});}
+}
+function copyResult(){
+  var t=document.getElementById('report'), out=document.getElementById('sendMsg');
+  function done(){out.textContent='Copied. Paste it in a message to your teacher.';}
+  function fallback(){
+    t.focus();t.select();
+    try{t.setSelectionRange(0,99999);}catch(e){}
+    try{if(document.execCommand('copy')){done();return;}}catch(e){}
+    out.textContent='Press and hold the text in the box, then choose Copy.';
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(reportText).then(done,fallback);}
+  else{fallback();}
+}
+updateBar();
+</script>
+</body>
+</html>
