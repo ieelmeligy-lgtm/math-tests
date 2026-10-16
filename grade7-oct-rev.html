@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 7 Math Test – October Revision</title>
+<style>
+  :root{
+    --green:#1f9d57; --green-dark:#157a42; --green-soft:#e8f6ee;
+    --ink:#1d2b24; --muted:#5f6f67; --line:#d5e3db; --bg:#f4f8f5; --card:#ffffff;
+    --red:#c8372d; --red-soft:#fdeceb; --amber:#f2b632;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  header{background:var(--green);color:#fff;padding:22px 16px 26px}
+  header .wrap{max-width:760px;margin:0 auto}
+  header h1{margin:0 0 4px;font-size:1.5rem}
+  header p{margin:0;opacity:.92;font-size:.95rem}
+  main{max-width:760px;margin:0 auto;padding:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+  label.name{display:block;font-weight:600;margin-bottom:6px}
+  input[type=text]{width:100%;padding:11px 12px;font-size:1rem;border:1.5px solid var(--line);border-radius:8px}
+  input[type=text]:focus{outline:none;border-color:var(--green)}
+  .progress{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0 10px}
+  .bar{height:8px;background:#dde9e2;border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--green);transition:width .2s}
+  .progress small{color:var(--muted);display:block;margin-top:4px}
+  .q-head{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
+  .num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--green-soft);color:var(--green-dark);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+  .stem{font-size:1.1rem;padding-top:2px}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .opt{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;font-size:1.05rem;min-height:52px;background:#fff}
+  .opt:hover{border-color:var(--green)}
+  .opt input{position:absolute;opacity:0;pointer-events:none}
+  .opt .let{flex:none;width:26px;height:26px;border-radius:6px;border:1.5px solid var(--line);font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+  .opt.sel{border-color:var(--green);background:var(--green-soft)}
+  .opt.sel .let{background:var(--green);border-color:var(--green);color:#fff}
+  .opt:focus-within{box-shadow:0 0 0 3px rgba(31,157,87,.25)}
+  .done .opt{cursor:default}
+  .done .opt:hover{border-color:var(--line)}
+  .opt.right{border-color:var(--green)!important;background:var(--green-soft)}
+  .opt.right .let{background:var(--green);border-color:var(--green);color:#fff}
+  .opt.wrong{border-color:var(--red)!important;background:var(--red-soft)}
+  .opt.wrong .let{background:var(--red);border-color:var(--red);color:#fff}
+  .why{display:none;margin-top:10px;padding:10px 12px;border-radius:8px;background:#f6f9f7;border-left:4px solid var(--green);font-size:.95rem}
+  .why.bad{border-left-color:var(--red)}
+  .done .why{display:block}
+  .card.missing{border-color:var(--amber);box-shadow:0 0 0 3px rgba(242,182,50,.25)}
+  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.1;font-size:.9em;margin:0 2px}
+  .frac b{font-weight:500;padding:0 4px}
+  .frac b:first-child{border-bottom:1.5px solid currentColor}
+  .circle{display:inline-block;width:26px;height:26px;border:1.5px solid #9bb3a6;border-radius:50%;vertical-align:middle;margin:0 8px}
+  .blank{display:inline-block;width:56px;border-bottom:1.5px solid #9bb3a6;vertical-align:baseline;margin:0 4px}
+  button{font:inherit;font-weight:600;border:0;border-radius:10px;padding:13px 20px;cursor:pointer}
+  .primary{background:var(--green);color:#fff;width:100%;font-size:1.05rem}
+  .primary:hover{background:var(--green-dark)}
+  .ghost{background:#fff;color:var(--green-dark);border:1.5px solid var(--green)}
+  .msg{color:var(--red);font-weight:600;margin:0 0 10px;display:none}
+  #result{display:none;text-align:center}
+  #result .score{font-size:2.6rem;font-weight:800;color:var(--green-dark);margin:4px 0}
+  #result .who{font-weight:600;font-size:1.1rem}
+  #result .note{color:var(--muted);margin:4px 0 14px}
+  .actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  a.primary,a.ghost{display:inline-block;text-decoration:none;border-radius:10px;padding:13px 20px;font-weight:600;text-align:center}
+  .send{border-top:1px solid var(--line);margin-top:16px;padding-top:14px}
+  .send .sendTitle{font-weight:700;margin:0 0 4px}
+  .send .sendHelp{color:var(--muted);font-size:.9rem;margin:0 0 12px}
+  .send .wa{background:#1fa855;margin-bottom:4px}
+  .send textarea{width:100%;margin-top:12px;padding:10px;font:inherit;font-size:.85rem;border:1.5px solid var(--line);border-radius:8px;background:#f6f9f7;color:var(--ink);resize:vertical}
+  .send .sendMsg{color:var(--green-dark);font-weight:600;font-size:.9rem;min-height:1.2em;margin:8px 0 0}
+  .req{color:var(--red)}
+  @media print{.send{display:none}}
+  footer{text-align:center;color:var(--muted);font-size:.8rem;padding:8px 16px 28px}
+  @media (max-width:420px){.opts{grid-template-columns:1fr}}
+  @media print{.progress,.actions,#submitCard{display:none}body{background:#fff}.card{break-inside:avoid}}
+
+  /* ---- v3: works without scripts (phone file preview) ---- */
+  main{counter-reset:sc an}
+  #quiz input:checked{counter-increment:an}
+  #quiz input[data-c]:checked{counter-increment:an sc}
+  .ch{display:block;position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .ch input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+  .ch input:checked + .opt{border-color:var(--green);background:var(--green-soft)}
+  .ch input:checked + .opt .let{background:var(--green);border-color:var(--green);color:#fff}
+  .ch input:focus + .opt{box-shadow:0 0 0 3px rgba(31,157,87,.25)}
+  .fin{position:absolute;opacity:0;width:1px;height:1px}
+  .graded .ch, #finish:checked ~ #quiz .ch{pointer-events:none;cursor:default}
+  .graded .ch input[data-c] + .opt, #finish:checked ~ #quiz .ch input[data-c] + .opt{border-color:var(--green);background:var(--green-soft)}
+  .graded .ch input[data-c] + .opt .let, #finish:checked ~ #quiz .ch input[data-c] + .opt .let{background:var(--green);border-color:var(--green);color:#fff}
+  .graded .ch input:checked:not([data-c]) + .opt, #finish:checked ~ #quiz .ch input:checked:not([data-c]) + .opt{border-color:var(--red);background:var(--red-soft)}
+  .graded .ch input:checked:not([data-c]) + .opt .let, #finish:checked ~ #quiz .ch input:checked:not([data-c]) + .opt .let{background:var(--red);border-color:var(--red);color:#fff}
+  .graded .why, #finish:checked ~ #quiz .why{display:block}
+  html:not(.js) .jsonly{display:none!important}
+  .js .nojs{display:none!important}
+  .notice{background:#fff8e6;border-color:#f2d58a;font-size:.95rem}
+  label.njBtn{display:block;text-align:center;border-radius:10px;padding:13px 20px;font-weight:600;cursor:pointer}
+  #finish:checked ~ #submitCard .njBtn{display:none}
+  #njResult{display:none;text-align:center}
+  #finish:checked ~ #njResult{display:block}
+  #njResult .score{font-size:2.6rem;font-weight:800;color:var(--green-dark);margin:4px 0}
+  #njResult .sc::before{content:counter(sc) " / 49"}
+  #njResult .an::before{content:counter(an) " of 49"}
+  #njResult p{margin:6px 0;color:var(--muted)}
+  #njResult input{margin:10px 0 4px;text-align:center}
+  .who-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:.95rem;margin-bottom:12px}
+  .who-bar a{color:var(--green-dark);font-weight:600}
+  #saveMsg{font-weight:600;color:var(--green-dark);margin:0 0 12px}
+  .sec{font-size:1.05rem;color:var(--green-dark);margin:20px 4px 10px}
+  .m{white-space:nowrap;display:inline-block}
+  .opt .m{white-space:normal}
+  .nw,.m .nw{white-space:nowrap}
+  .mb{display:block;margin:6px 0 2px;text-align:left}
+  .mb .m{white-space:normal}
+  html[dir=rtl] .mb{text-align:right}
+  .ov{text-decoration:overline}
+  .venn-svg{display:block;margin:8px 0 0}
+  .venn-svg svg{max-width:100%;height:auto}
+  .venn-svg ellipse{fill:none;stroke:var(--ink);stroke-width:1.5}
+  .venn-svg text{font-size:15px;text-anchor:middle;fill:var(--ink);font-family:"Segoe UI",Roboto,Arial,sans-serif}
+  .venn-svg text.lab{font-weight:700;fill:#1f5fa8}
+</style>
+<script>document.documentElement.className='js';</script>
+<script src="config.js"></script>
+<script src="portal.js"></script>
+<script>var PORTAL_SESSION=Portal.requireLogin('7');</script>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>October Revision</h1>
+    <p>Grade 7 Math · Pages 1, 2, 5 and 6 · 49 questions</p>
+  </div>
+</header>
+
+<main>
+  <div class="who-bar jsonly"><span id="whoami"></span><a href="index.html">My tests</a></div>
+  <div class="card notice nojs">You are viewing this test in preview mode. Answer the questions, tap <strong>Show my result</strong> at the end, then send a screenshot of your result to your teacher.</div>
+
+  <div class="card" id="result" aria-live="polite">
+    <div class="who" id="who"></div>
+    <div class="score" id="score"></div>
+    <div class="note" id="note"></div>
+    <p id="saveMsg"></p>
+    <div class="actions">
+      <button class="ghost" onclick="window.print()">Print / save result</button>
+      <button class="ghost" onclick="restart()">Try again</button>
+      <a class="ghost" href="index.html">My tests</a>
+    </div>
+    <div class="send">
+      <p class="sendTitle">Send your result to your teacher</p>
+      <p class="sendHelp">Your name, score and answers are ready to send.</p>
+      <a class="primary wa" id="waBtn" href="#" target="_blank" rel="noopener">Send by WhatsApp</a>
+      <div class="actions">
+        <a class="ghost" id="mailBtn" href="#">Send by email</a>
+        <button class="ghost" id="shareBtn" onclick="shareResult()">Share another way</button>
+        <button class="ghost" onclick="copyResult()">Copy result</button>
+      </div>
+      <p class="sendMsg" id="sendMsg"></p>
+      <textarea id="report" rows="7" readonly aria-label="Result to send"></textarea>
+    </div>
+  </div>
+
+  <div class="card jsonly" id="nameCard">
+    <label class="name" for="student">Student name <span class="req">*</span></label>
+    <input type="text" id="student" placeholder="Write your name" autocomplete="off">
+  </div>
+
+  <div class="progress jsonly" id="progress">
+    <div class="bar"><i id="barFill"></i></div>
+    <small id="barText">0 of 49 answered</small>
+  </div>
+
+  <input type="checkbox" id="finish" class="fin" tabindex="-1" aria-hidden="true">
+
+  <div id="quiz">
+  <h2 class="sec">Page 1 · Choose the correct answer</h2>
+  <div class="card" id="q0"><div class="q-head"><div class="num">1</div><div class="stem">If <span class="m" dir="ltr"><span class="frac"><b>3</b><b>4</b></span> = <span class="frac"><b><i>a</i></b><b>20</b></span></span>, what is the value of <span class="m" dir="ltr"><i>a</i></span>?</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 1">
+    <label class="ch"><input type="radio" name="q0" value="0" data-c><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">15</span></span></span></label>
+    <label class="ch"><input type="radio" name="q0" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">12</span></span></span></label>
+    <label class="ch"><input type="radio" name="q0" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">60</span></span></span></label>
+    <label class="ch"><input type="radio" name="q0" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">5</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong>Cross multiply: <span class="m" dir="ltr">4<i>a</i> = 3 × 20 = 60</span>, so <span class="m" dir="ltr"><i>a</i> = 15</span>.</div></div>
+  <div class="card" id="q1"><div class="q-head"><div class="num">2</div><div class="stem">If <span class="m" dir="ltr"><span class="frac"><b>2</b><b>5</b></span> = <span class="frac"><b><i>a</i></b><b>15</b></span></span>, what is the value of <span class="m" dir="ltr"><i>a</i> + 4</span>?</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 2">
+    <label class="ch"><input type="radio" name="q1" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">15</span></span></span></label>
+    <label class="ch"><input type="radio" name="q1" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">12</span></span></span></label>
+    <label class="ch"><input type="radio" name="q1" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">60</span></span></span></label>
+    <label class="ch"><input type="radio" name="q1" value="3" data-c><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">10</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong><span class="m" dir="ltr">5<i>a</i> = 2 × 15 = 30</span>, so <span class="m" dir="ltr"><i>a</i> = 6</span> and <span class="m" dir="ltr"><i>a</i> + 4 = 10</span>.</div></div>
+  <div class="card" id="q2"><div class="q-head"><div class="num">3</div><div class="stem">Which of the following represents a proportion?</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 3">
+    <label class="ch"><input type="radio" name="q2" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="frac"><b>5</b><b>3</b></span> = <span class="frac"><b>3</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q2" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="frac"><b>4</b><b>7</b></span> = <span class="frac"><b>8</b><b>14</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q2" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="frac"><b>5</b><b>6</b></span> = <span class="frac"><b>10</b><b>3</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q2" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="frac"><b>6</b><b>4</b></span> = <span class="frac"><b>2</b><b>3</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m" dir="ltr"><span class="frac"><b>8</b><b>14</b></span></span> simplifies to <span class="m" dir="ltr"><span class="frac"><b>4</b><b>7</b></span></span> (divide both terms by 2), so the two ratios are equal.</div></div>
+  <div class="card" id="q3"><div class="q-head"><div class="num">4</div><div class="stem">If <span class="m" dir="ltr">20, <i>X</i>, 4, 3</span> are proportional quantities, then <span class="m" dir="ltr"><i>X</i> = <span class="blank"></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 4">
+    <label class="ch"><input type="radio" name="q3" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">5</span></span></span></label>
+    <label class="ch"><input type="radio" name="q3" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">15</span></span></span></label>
+    <label class="ch"><input type="radio" name="q3" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">20</span></span></span></label>
+    <label class="ch"><input type="radio" name="q3" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">25</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m" dir="ltr"><span class="frac"><b>20</b><b><i>X</i></b></span> = <span class="frac"><b>4</b><b>3</b></span></span>, so <span class="m" dir="ltr">4<i>X</i> = 60</span> and <span class="m" dir="ltr"><i>X</i> = 15</span>.</div></div>
+  <div class="card" id="q4"><div class="q-head"><div class="num">5</div><div class="stem">If the length in the drawing is <span class="m" dir="ltr">8 cm</span> and the real length is <span class="m" dir="ltr">32 m</span>, then the drawing scale is <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 5">
+    <label class="ch"><input type="radio" name="q4" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">1 : 40</span></span></span></label>
+    <label class="ch"><input type="radio" name="q4" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">1 : 400</span></span></span></label>
+    <label class="ch"><input type="radio" name="q4" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">1 : 4</span></span></span></label>
+    <label class="ch"><input type="radio" name="q4" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">1 : 4,000</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m" dir="ltr">32 m = 3200 cm</span>. Scale = <span class="m" dir="ltr">8 : 3200 = 1 : 400</span>.</div></div>
+  <div class="card" id="q5"><div class="q-head"><div class="num">6</div><div class="stem">The drawing scale <span class="m" dir="ltr">1 : 5,000</span> means that every <span class="m" dir="ltr">1 cm</span> on the map represents <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 6">
+    <label class="ch"><input type="radio" name="q5" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">5 m</span></span></span></label>
+    <label class="ch"><input type="radio" name="q5" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">50 m</span></span></span></label>
+    <label class="ch"><input type="radio" name="q5" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">5,000 m</span></span></span></label>
+    <label class="ch"><input type="radio" name="q5" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">500 m</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m" dir="ltr">1 cm</span> represents <span class="m" dir="ltr">5,000 cm = 50 m</span>.</div></div>
+  <div class="card" id="q6"><div class="q-head"><div class="num">7</div><div class="stem">Which of the following scale drawings represents a minimization (reduction)?</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 7">
+    <label class="ch"><input type="radio" name="q6" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">70 : 1</span></span></span></label>
+    <label class="ch"><input type="radio" name="q6" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">1 : 7,000</span></span></span></label>
+    <label class="ch"><input type="radio" name="q6" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">500 : 1</span></span></span></label>
+    <label class="ch"><input type="radio" name="q6" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">7,000 : 1</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong>In a reduction the drawing is smaller than reality, so the first number is smaller: <span class="m" dir="ltr">1 : 7,000</span>.</div></div>
+  <div class="card" id="q7"><div class="q-head"><div class="num">8</div><div class="stem">If the amount of <span class="m" dir="ltr">180</span> pounds is divided in a ratio of <span class="m" dir="ltr">2 : 1</span>, the smaller share is <span class="blank"></span> pound.</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 8">
+    <label class="ch"><input type="radio" name="q7" value="0" data-c><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">60</span></span></span></label>
+    <label class="ch"><input type="radio" name="q7" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">90</span></span></span></label>
+    <label class="ch"><input type="radio" name="q7" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">120</span></span></span></label>
+    <label class="ch"><input type="radio" name="q7" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">30</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong>Total parts <span class="m" dir="ltr">2 + 1 = 3</span>. One part = <span class="m" dir="ltr">180 ÷ 3 = 60</span>. The smaller share is one part.</div></div>
+  <div class="card" id="q8"><div class="q-head"><div class="num">9</div><div class="stem">The percentage of <span class="m" dir="ltr">30</span> out of <span class="m" dir="ltr">150</span> equals <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 9">
+    <label class="ch"><input type="radio" name="q8" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">10%</span></span></span></label>
+    <label class="ch"><input type="radio" name="q8" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">15%</span></span></span></label>
+    <label class="ch"><input type="radio" name="q8" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">20%</span></span></span></label>
+    <label class="ch"><input type="radio" name="q8" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">25%</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m" dir="ltr"><span class="frac"><b>30</b><b>150</b></span> × 100% = 20%</span>.</div></div>
+  <div class="card" id="q9"><div class="q-head"><div class="num">10</div><div class="stem">If <span class="m" dir="ltr"><i>x</i> = {2, 4}</span>, <span class="m" dir="ltr"><i>y</i> = {4, 6}</span>, then <span class="m" dir="ltr"><i>x</i> ∩ <i>y</i> = <span class="blank"></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 10">
+    <label class="ch"><input type="radio" name="q9" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">4</span></span></span></label>
+    <label class="ch"><input type="radio" name="q9" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">{4}</span></span></span></label>
+    <label class="ch"><input type="radio" name="q9" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">{2}</span></span></span></label>
+    <label class="ch"><input type="radio" name="q9" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">∅</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong>The intersection is a set of the common elements: <span class="m" dir="ltr">{4}</span>. Writing 4 without braces is an element, not a set.</div></div>
+  <div class="card" id="q10"><div class="q-head"><div class="num">11</div><div class="stem">If <span class="m" dir="ltr"><i>x</i> ∈ {8, 2, 5}</span>, then the value of <span class="m" dir="ltr"><i>x</i></span> cannot be equal to <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 11">
+    <label class="ch"><input type="radio" name="q10" value="0" data-c><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">3</span></span></span></label>
+    <label class="ch"><input type="radio" name="q10" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">5</span></span></span></label>
+    <label class="ch"><input type="radio" name="q10" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">8</span></span></span></label>
+    <label class="ch"><input type="radio" name="q10" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">2</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong><span class="m" dir="ltr">3</span> is not an element of <span class="m" dir="ltr">{8, 2, 5}</span>.</div></div>
+  <div class="card" id="q11"><div class="q-head"><div class="num">12</div><div class="stem"><span class="m" dir="ltr">∅ <span class="blank"></span> {1, 3, 4}</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 12">
+    <label class="ch"><input type="radio" name="q11" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">&isin;</span></span></span></label>
+    <label class="ch"><input type="radio" name="q11" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">&notin;</span></span></span></label>
+    <label class="ch"><input type="radio" name="q11" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">&sub;</span></span></span></label>
+    <label class="ch"><input type="radio" name="q11" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">&#8836;</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong>The empty set is a subset of every set, so we use ⊂.</div></div>
+  <h2 class="sec">Page 2 · Choose the correct answer</h2>
+  <div class="card" id="q12"><div class="q-head"><div class="num">13</div><div class="stem">The additive inverse of the number <span class="m" dir="ltr">|−3|</span> is <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 13">
+    <label class="ch"><input type="radio" name="q12" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">4</span></span></span></label>
+    <label class="ch"><input type="radio" name="q12" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">−3</span></span></span></label>
+    <label class="ch"><input type="radio" name="q12" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">3</span></span></span></label>
+    <label class="ch"><input type="radio" name="q12" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">5</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m" dir="ltr">|−3| = 3</span>, and the additive inverse of 3 is <span class="m" dir="ltr">−3</span>.</div></div>
+  <div class="card" id="q13"><div class="q-head"><div class="num">14</div><div class="stem">What is the additive identity in Z?</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 14">
+    <label class="ch"><input type="radio" name="q13" value="0" data-c><span class="opt"><span class="let">A</span><span>Zero</span></span></label>
+    <label class="ch"><input type="radio" name="q13" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">1</span></span></span></label>
+    <label class="ch"><input type="radio" name="q13" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">−1</span></span></span></label>
+    <label class="ch"><input type="radio" name="q13" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">−10</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong>Adding zero does not change a number: <span class="m" dir="ltr"><i>a</i> + 0 = <i>a</i></span>.</div></div>
+  <div class="card" id="q14"><div class="q-head"><div class="num">15</div><div class="stem">If <span class="m" dir="ltr"><i>a</i> + <span class="frac"><b>5</b><b>6</b></span> = 0</span>, then <span class="m" dir="ltr"><i>a</i> = <span class="blank"></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 15">
+    <label class="ch"><input type="radio" name="q14" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="frac"><b>−6</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q14" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="frac"><b>6</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q14" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="frac"><b>−5</b><b>6</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q14" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="frac"><b>5</b><b>6</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><i>a</i> is the additive inverse of <span class="m" dir="ltr"><span class="frac"><b>5</b><b>6</b></span></span>, which is <span class="m" dir="ltr"><span class="frac"><b>−5</b><b>6</b></span></span>.</div></div>
+  <div class="card" id="q15"><div class="q-head"><div class="num">16</div><div class="stem">If <span class="m" dir="ltr"><i>a</i> + <span class="frac"><b>3</b><b>4</b></span> = 1</span>, then <span class="m" dir="ltr"><i>a</i> = <span class="blank"></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 16">
+    <label class="ch"><input type="radio" name="q15" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="frac"><b>−3</b><b>4</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q15" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="frac"><b>4</b><b>3</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q15" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="frac"><b>1</b><b>4</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q15" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="frac"><b>3</b><b>4</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m" dir="ltr"><i>a</i> = 1 − <span class="frac"><b>3</b><b>4</b></span> = <span class="frac"><b>1</b><b>4</b></span></span>.</div></div>
+  <div class="card" id="q16"><div class="q-head"><div class="num">17</div><div class="stem">The multiplicative inverse of <span class="m" dir="ltr">|<span class="frac"><b>−4</b><b>3</b></span>|</span> is <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 17">
+    <label class="ch"><input type="radio" name="q16" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="frac"><b>−4</b><b>3</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q16" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="frac"><b>3</b><b>4</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q16" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="frac"><b>4</b><b>3</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q16" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">1</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m" dir="ltr">|<span class="frac"><b>−4</b><b>3</b></span>| = <span class="frac"><b>4</b><b>3</b></span></span>, and its multiplicative inverse is <span class="m" dir="ltr"><span class="frac"><b>3</b><b>4</b></span></span> because <span class="m" dir="ltr"><span class="frac"><b>4</b><b>3</b></span> × <span class="frac"><b>3</b><b>4</b></span> = 1</span>.</div></div>
+  <div class="card" id="q17"><div class="q-head"><div class="num">18</div><div class="stem"><span class="m" dir="ltr">−5 − (−3) = <span class="blank"></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 18">
+    <label class="ch"><input type="radio" name="q17" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">2</span></span></span></label>
+    <label class="ch"><input type="radio" name="q17" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">−8</span></span></span></label>
+    <label class="ch"><input type="radio" name="q17" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">8</span></span></span></label>
+    <label class="ch"><input type="radio" name="q17" value="3" data-c><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">−2</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong>Subtracting <span class="m" dir="ltr">−3</span> is adding 3: <span class="m" dir="ltr">−5 + 3 = −2</span>.</div></div>
+  <div class="card" id="q18"><div class="q-head"><div class="num">19</div><div class="stem">The result of subtracting <span class="m" dir="ltr"><span class="frac"><b>3</b><b>5</b></span></span> from <span class="m" dir="ltr"><span class="frac"><b>7</b><b>10</b></span></span> is equal to <span class="blank"></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 19">
+    <label class="ch"><input type="radio" name="q18" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="frac"><b>4</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q18" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="frac"><b>1</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q18" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="frac"><b>1</b><b>10</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q18" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="frac"><b>−4</b><b>5</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m" dir="ltr"><span class="frac"><b>7</b><b>10</b></span> − <span class="frac"><b>6</b><b>10</b></span> = <span class="frac"><b>1</b><b>10</b></span></span>.</div></div>
+  <div class="card" id="q19"><div class="q-head"><div class="num">20</div><div class="stem">If <span class="m" dir="ltr"><i>a</i> − <span class="frac"><b>1</b><b>2</b></span> = <span class="frac"><b>1</b><b>2</b></span></span>, then <span class="m" dir="ltr"><i>a</i> = <span class="blank"></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 20">
+    <label class="ch"><input type="radio" name="q19" value="0" data-c><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">1</span></span></span></label>
+    <label class="ch"><input type="radio" name="q19" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="frac"><b>1</b><b>2</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q19" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">1<span class="frac"><b>1</b><b>2</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q19" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">0</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong><span class="m" dir="ltr"><i>a</i> = <span class="frac"><b>1</b><b>2</b></span> + <span class="frac"><b>1</b><b>2</b></span> = 1</span>.</div></div>
+  <h2 class="sec">Page 2 · Answer the following</h2>
+  <div class="card" id="q20"><div class="q-head"><div class="num">21</div><div class="stem">If <span class="m" dir="ltr"><span class="frac"><b>2</b><b>3</b></span> = <span class="frac"><b>6</b><b><i>k</i></b></span></span>, find the value of <span class="m" dir="ltr"><i>k</i></span>.</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 21">
+    <label class="ch"><input type="radio" name="q20" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">4</span></span></span></label>
+    <label class="ch"><input type="radio" name="q20" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">12</span></span></span></label>
+    <label class="ch"><input type="radio" name="q20" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">9</span></span></span></label>
+    <label class="ch"><input type="radio" name="q20" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">3</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m" dir="ltr">2<i>k</i> = 3 × 6 = 18</span>, so <span class="m" dir="ltr"><i>k</i> = 9</span>.</div></div>
+  <div class="card" id="q21"><div class="q-head"><div class="num">22</div><div class="stem">If <span class="m" dir="ltr"><span class="frac"><b><i>x</i></b><b>4</b></span> = 0.2</span>, find the value of <span class="m" dir="ltr"><i>x</i></span>.</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 22">
+    <label class="ch"><input type="radio" name="q21" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">0.05</span></span></span></label>
+    <label class="ch"><input type="radio" name="q21" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">0.8</span></span></span></label>
+    <label class="ch"><input type="radio" name="q21" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">8</span></span></span></label>
+    <label class="ch"><input type="radio" name="q21" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">0.2</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m" dir="ltr"><i>x</i> = 0.2 × 4 = 0.8</span>.</div></div>
+  <div class="card" id="q22"><div class="q-head"><div class="num">23</div><div class="stem">If <span class="m" dir="ltr"><span class="frac"><b><i>n</i> − 2</b><b>3</b></span> = <span class="frac"><b>3</b><b>18</b></span></span>, find the value of <span class="m" dir="ltr"><i>n</i></span>.</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 23">
+    <label class="ch"><input type="radio" name="q22" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">3</span></span></span></label>
+    <label class="ch"><input type="radio" name="q22" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">0.5</span></span></span></label>
+    <label class="ch"><input type="radio" name="q22" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">1.5</span></span></span></label>
+    <label class="ch"><input type="radio" name="q22" value="3" data-c><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">2.5</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong><span class="m" dir="ltr">18(<i>n</i> − 2) = 9</span>, so <span class="m" dir="ltr"><i>n</i> − 2 = 0.5</span> and <span class="m" dir="ltr"><i>n</i> = 2.5</span>.</div></div>
+  <div class="card" id="q23"><div class="q-head"><div class="num">24</div><div class="stem">If the quantities <span class="m" dir="ltr"><i>a</i>, 2, 5, <i>b</i></span> are proportional, find the value of <span class="m" dir="ltr"><i>a</i> × <i>b</i></span>.</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 24">
+    <label class="ch"><input type="radio" name="q23" value="0" data-c><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">10</span></span></span></label>
+    <label class="ch"><input type="radio" name="q23" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">7</span></span></span></label>
+    <label class="ch"><input type="radio" name="q23" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">2.5</span></span></span></label>
+    <label class="ch"><input type="radio" name="q23" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">3</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong><span class="m" dir="ltr"><span class="frac"><b><i>a</i></b><b>2</b></span> = <span class="frac"><b>5</b><b><i>b</i></b></span></span>, so the product of the extremes equals the product of the means: <span class="m" dir="ltr"><i>a</i> × <i>b</i> = 2 × 5 = 10</span>.</div></div>
+  <h2 class="sec">Page 5 · Answer the following</h2>
+  <div class="card" id="q24"><div class="q-head"><div class="num">25</div><div class="stem">Use the Venn diagram to find <span class="m" dir="ltr">A</span> and <span class="m" dir="ltr">B</span>.<span class="venn-svg" dir="ltr"><svg viewBox="0 0 200 110" width="200" height="110" role="img" aria-label="Venn diagram"><ellipse cx="72" cy="58" rx="58" ry="44"/><ellipse cx="128" cy="58" rx="58" ry="44"/><text class="lab" x="14" y="14">B</text><text class="lab" x="182" y="14">A</text><text x="50" y="16">9</text><text x="50" y="34">7</text><text x="50" y="52">5</text><text x="100" y="34">1</text><text x="150" y="25">2</text><text x="150" y="43">4</text></svg></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 25">
+    <label class="ch"><input type="radio" name="q24" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="nw">A = {2, 4}</span>, <span class="nw">B = {5, 7, 9}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q24" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="nw">A = {1, 2, 4}</span>, <span class="nw">B = {1, 5, 7, 9}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q24" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="nw">A = {1, 5, 7, 9}</span>, <span class="nw">B = {1, 2, 4}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q24" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="nw">A = {1, 2, 4, 5, 7, 9}</span>, <span class="nw">B = {1}</span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong>Each set contains its own part and the common part: <span class="m" dir="ltr"><span class="nw">A = {1, 2, 4}</span>, <span class="nw">B = {1, 5, 7, 9}</span></span>.</div></div>
+  <div class="card" id="q25"><div class="q-head"><div class="num">26</div><div class="stem">Use the same Venn diagram to find <span class="m" dir="ltr">A ∩ B</span> and <span class="m" dir="ltr">A ∪ B</span>.<span class="venn-svg" dir="ltr"><svg viewBox="0 0 200 110" width="200" height="110" role="img" aria-label="Venn diagram"><ellipse cx="72" cy="58" rx="58" ry="44"/><ellipse cx="128" cy="58" rx="58" ry="44"/><text class="lab" x="14" y="14">B</text><text class="lab" x="182" y="14">A</text><text x="50" y="16">9</text><text x="50" y="34">7</text><text x="50" y="52">5</text><text x="100" y="34">1</text><text x="150" y="25">2</text><text x="150" y="43">4</text></svg></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 26">
+    <label class="ch"><input type="radio" name="q25" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="nw">A ∩ B = {1}</span>, <span class="nw">A ∪ B = {2, 4, 5, 7, 9}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q25" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="nw">A ∩ B = 1</span>, <span class="nw">A ∪ B = {1, 2, 4, 5, 7, 9}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q25" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="nw">A ∩ B = {1, 2, 4, 5, 7, 9}</span>, <span class="nw">A ∪ B = {1}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q25" value="3" data-c><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="nw">A ∩ B = {1}</span>, <span class="nw">A ∪ B = {1, 2, 4, 5, 7, 9}</span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong>The intersection is the common part <span class="m" dir="ltr">{1}</span>. The union is every element, written once: <span class="m" dir="ltr">{1, 2, 4, 5, 7, 9}</span>.</div></div>
+  <div class="card" id="q26"><div class="q-head"><div class="num">27</div><div class="stem">Use the Venn diagram to find <span class="m" dir="ltr"><span class="nw">A</span>, <span class="nw">B</span>, <span class="nw">A ∩ B</span>, <span class="nw">A ∪ B</span></span>.<span class="venn-svg" dir="ltr"><svg viewBox="0 0 200 110" width="200" height="110" role="img" aria-label="Venn diagram"><ellipse cx="96" cy="60" rx="78" ry="44"/><ellipse cx="122" cy="60" rx="38" ry="30"/><text class="lab" x="16" y="16">A</text><text class="lab" x="150" y="24">B</text><text x="52" y="54">4</text><text x="52" y="76">3</text><text x="122" y="54">2</text><text x="122" y="76">1</text></svg></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 27">
+    <label class="ch"><input type="radio" name="q26" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="nw">A = {3, 4}</span>, <span class="nw">B = {1, 2}</span>, <span class="nw">A ∩ B = ∅</span>, <span class="nw">A ∪ B = {1, 2, 3, 4}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q26" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="nw">A = {1, 2, 3, 4}</span>, <span class="nw">B = {1, 2}</span>, <span class="nw">A ∩ B = {1, 2}</span>, <span class="nw">A ∪ B = {1, 2, 3, 4}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q26" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="nw">A = {1, 2, 3, 4}</span>, <span class="nw">B = {1, 2}</span>, <span class="nw">A ∩ B = {3, 4}</span>, <span class="nw">A ∪ B = {1, 2}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q26" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="nw">A = {1, 2, 3, 4}</span>, <span class="nw">B = {1, 2}</span>, <span class="nw">A ∩ B = ∅</span>, <span class="nw">A ∪ B = {1, 2, 3, 4}</span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m" dir="ltr">B</span> is inside <span class="m" dir="ltr">A</span> (<span class="m" dir="ltr">B ⊂ A</span>), so <span class="m" dir="ltr">A ∩ B = B = {1, 2}</span> and <span class="m" dir="ltr">A ∪ B = A = {1, 2, 3, 4}</span>.</div></div>
+  <div class="card" id="q27"><div class="q-head"><div class="num">28</div><div class="stem">If <span class="m" dir="ltr"><span class="nw">A = {1, 3, 5}</span>, <span class="nw">B = {1, 2, 3, 7}</span></span>, find <span class="m" dir="ltr">A ∩ B</span> and <span class="m" dir="ltr">A ∪ B</span>.</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 28">
+    <label class="ch"><input type="radio" name="q27" value="0" data-c><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="nw">A ∩ B = {1, 3}</span>, <span class="nw">A ∪ B = {1, 2, 3, 5, 7}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q27" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="nw">A ∩ B = {1, 2, 3, 5, 7}</span>, <span class="nw">A ∪ B = {1, 3}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q27" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="nw">A ∩ B = {5}</span>, <span class="nw">A ∪ B = {1, 2, 3, 7}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q27" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="nw">A ∩ B = {1, 3}</span>, <span class="nw">A ∪ B = {1, 1, 2, 3, 3, 5, 7}</span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong>Common elements: 1 and 3. The union lists each element once: <span class="m" dir="ltr">{1, 2, 3, 5, 7}</span>.</div></div>
+  <div class="card" id="q28"><div class="q-head"><div class="num">29</div><div class="stem">If <span class="mb" dir="ltr"><span class="m" dir="ltr"><span class="nw">A = {1, 7, 9}</span>, <span class="nw">B = {4, 2, 7}</span>, <span class="nw">C = {1, 7}</span></span></span>find: <span class="mb" dir="ltr"><span class="m" dir="ltr"><span class="nw">(a) A ∩ B ∩ C</span>  <span class="nw">(b) A ∪ B ∪ C</span>  <span class="nw">(c) A ∪ (B ∩ C)</span></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 29">
+    <label class="ch"><input type="radio" name="q28" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="nw">(a) {1, 7}</span>  <span class="nw">(b) {1, 2, 4, 7, 9}</span>  <span class="nw">(c) {1, 7, 9}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q28" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="nw">(a) {7}</span>  <span class="nw">(b) {1, 2, 4, 7, 9}</span>  <span class="nw">(c) {7}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q28" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="nw">(a) {7}</span>  <span class="nw">(b) {1, 2, 4, 7, 9}</span>  <span class="nw">(c) {1, 7, 9}</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q28" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="nw">(a) ∅</span>  <span class="nw">(b) {1, 2, 4, 7, 9}</span>  <span class="nw">(c) {1, 7, 9}</span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong>(a) 7 is the only element in all three sets. (b) All elements once: <span class="m" dir="ltr">{1, 2, 4, 7, 9}</span>. (c) <span class="m" dir="ltr">B ∩ C = {7}</span>, so <span class="m" dir="ltr">A ∪ {7} = {1, 7, 9}</span>.</div></div>
+  <div class="card" id="q29"><div class="q-head"><div class="num">30</div><div class="stem">Use the addition properties in Z to find the result of: <span class="m" dir="ltr">(−17) + 3 + 17</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 30">
+    <label class="ch"><input type="radio" name="q29" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">−3</span></span></span></label>
+    <label class="ch"><input type="radio" name="q29" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">37</span></span></span></label>
+    <label class="ch"><input type="radio" name="q29" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">3</span></span></span></label>
+    <label class="ch"><input type="radio" name="q29" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">−31</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong>Commutative and associative: <span class="m" dir="ltr">(−17 + 17) + 3 = 0 + 3 = 3</span>.</div></div>
+  <div class="card" id="q30"><div class="q-head"><div class="num">31</div><div class="stem">Using properties of addition in Q, find in the simplest form: <span class="m" dir="ltr"><span class="frac"><b>−4</b><b>10</b></span> + <span class="frac"><b>−1</b><b>4</b></span> + <span class="frac"><b>2</b><b>10</b></span> + <span class="frac"><b>1</b><b>4</b></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 31">
+    <label class="ch"><input type="radio" name="q30" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="frac"><b>1</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q30" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="frac"><b>−1</b><b>5</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q30" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="frac"><b>−3</b><b>10</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q30" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">0</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong>Group: <span class="m" dir="ltr">(<span class="frac"><b>−1</b><b>4</b></span> + <span class="frac"><b>1</b><b>4</b></span>) + (<span class="frac"><b>−4</b><b>10</b></span> + <span class="frac"><b>2</b><b>10</b></span>) = 0 + <span class="frac"><b>−2</b><b>10</b></span> = <span class="frac"><b>−1</b><b>5</b></span></span>.</div></div>
+  <div class="card" id="q31"><div class="q-head"><div class="num">32</div><div class="stem">Use the properties of multiplication in Z to find: <span class="m" dir="ltr">−4 × (−19) × 25</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 32">
+    <label class="ch"><input type="radio" name="q31" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">−1900</span></span></span></label>
+    <label class="ch"><input type="radio" name="q31" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">475</span></span></span></label>
+    <label class="ch"><input type="radio" name="q31" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">190</span></span></span></label>
+    <label class="ch"><input type="radio" name="q31" value="3" data-c><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">1900</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong><span class="m" dir="ltr">(−4 × 25) × (−19) = −100 × (−19) = 1900</span>. Negative × negative is positive.</div></div>
+  <div class="card" id="q32"><div class="q-head"><div class="num">33</div><div class="stem">Use the distributive property to find: <span class="m" dir="ltr">15 × 65 + 15 × 35</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 33">
+    <label class="ch"><input type="radio" name="q32" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">150</span></span></span></label>
+    <label class="ch"><input type="radio" name="q32" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">1500</span></span></span></label>
+    <label class="ch"><input type="radio" name="q32" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">975</span></span></span></label>
+    <label class="ch"><input type="radio" name="q32" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">15000</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m" dir="ltr">15 × (65 + 35) = 15 × 100 = 1500</span>.</div></div>
+  <div class="card" id="q33"><div class="q-head"><div class="num">34</div><div class="stem">Use the distributive property to find: <span class="m" dir="ltr">2 × 8 − 8 + 8 × 9</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 34">
+    <label class="ch"><input type="radio" name="q33" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">96</span></span></span></label>
+    <label class="ch"><input type="radio" name="q33" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">72</span></span></span></label>
+    <label class="ch"><input type="radio" name="q33" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">80</span></span></span></label>
+    <label class="ch"><input type="radio" name="q33" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">64</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m" dir="ltr">8 × (2 − 1 + 9) = 8 × 10 = 80</span>. The lone 8 is <span class="m" dir="ltr">8 × 1</span>.</div></div>
+  <div class="card" id="q34"><div class="q-head"><div class="num">35</div><div class="stem">Use the distributive property to find: <span class="mb" dir="ltr"><span class="frac"><b>6</b><b>37</b></span> × 7 + <span class="frac"><b>6</b><b>37</b></span> × 5 + <span class="frac"><b>6</b><b>37</b></span> × (−11)</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 35">
+    <label class="ch"><input type="radio" name="q34" value="0" data-c><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="frac"><b>6</b><b>37</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q34" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="frac"><b>138</b><b>37</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q34" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">1</span></span></span></label>
+    <label class="ch"><input type="radio" name="q34" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="frac"><b>−6</b><b>37</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong><span class="m" dir="ltr"><span class="frac"><b>6</b><b>37</b></span> × (7 + 5 − 11) = <span class="frac"><b>6</b><b>37</b></span> × 1 = <span class="frac"><b>6</b><b>37</b></span></span>.</div></div>
+  <div class="card" id="q35"><div class="q-head"><div class="num">36</div><div class="stem">Use the distributive property to find: <span class="m" dir="ltr"><span class="frac"><b>7</b><b>13</b></span> × 6 + <span class="frac"><b>7</b><b>13</b></span> × 8 + <span class="frac"><b>7</b><b>13</b></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 36">
+    <label class="ch"><input type="radio" name="q35" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="frac"><b>98</b><b>13</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q35" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">15</span></span></span></label>
+    <label class="ch"><input type="radio" name="q35" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="frac"><b>7</b><b>13</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q35" value="3" data-c><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="frac"><b>105</b><b>13</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong><span class="m" dir="ltr"><span class="frac"><b>7</b><b>13</b></span> × (6 + 8 + 1) = <span class="frac"><b>7</b><b>13</b></span> × 15 = <span class="frac"><b>105</b><b>13</b></span></span>. The last <span class="m" dir="ltr"><span class="frac"><b>7</b><b>13</b></span></span> is <span class="m" dir="ltr"><span class="frac"><b>7</b><b>13</b></span> × 1</span>.</div></div>
+  <div class="card" id="q36"><div class="q-head"><div class="num">37</div><div class="stem">Find the result of: <span class="m" dir="ltr">(−5) × (−3) + (−4)</span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 37">
+    <label class="ch"><input type="radio" name="q36" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">19</span></span></span></label>
+    <label class="ch"><input type="radio" name="q36" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">11</span></span></span></label>
+    <label class="ch"><input type="radio" name="q36" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">−11</span></span></span></label>
+    <label class="ch"><input type="radio" name="q36" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">−19</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong>Multiply first: <span class="m" dir="ltr">15 + (−4) = 11</span>.</div></div>
+  <div class="card" id="q37"><div class="q-head"><div class="num">38</div><div class="stem"><span class="m" dir="ltr">75% + |<span class="frac"><b>−3</b><b>4</b></span>| = <span class="blank"></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 38">
+    <label class="ch"><input type="radio" name="q37" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">0</span></span></span></label>
+    <label class="ch"><input type="radio" name="q37" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="frac"><b>3</b><b>2</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q37" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">1</span></span></span></label>
+    <label class="ch"><input type="radio" name="q37" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">75.75</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m" dir="ltr">75% = <span class="frac"><b>3</b><b>4</b></span></span> and <span class="m" dir="ltr">|<span class="frac"><b>−3</b><b>4</b></span>| = <span class="frac"><b>3</b><b>4</b></span></span>. <span class="m" dir="ltr"><span class="frac"><b>3</b><b>4</b></span> + <span class="frac"><b>3</b><b>4</b></span> = <span class="frac"><b>3</b><b>2</b></span></span>.</div></div>
+  <div class="card" id="q38"><div class="q-head"><div class="num">39</div><div class="stem"><span class="m" dir="ltr">5<span class="frac"><b>1</b><b>2</b></span> − 4<span class="frac"><b>1</b><b>4</b></span> = <span class="blank"></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 39">
+    <label class="ch"><input type="radio" name="q38" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">1<span class="frac"><b>1</b><b>2</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q38" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">9<span class="frac"><b>3</b><b>4</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q38" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">1<span class="frac"><b>1</b><b>4</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q38" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">1</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m" dir="ltr">5 − 4 = 1</span> and <span class="m" dir="ltr"><span class="frac"><b>2</b><b>4</b></span> − <span class="frac"><b>1</b><b>4</b></span> = <span class="frac"><b>1</b><b>4</b></span></span>, so the answer is <span class="m" dir="ltr">1<span class="frac"><b>1</b><b>4</b></span></span>.</div></div>
+  <div class="card" id="q39"><div class="q-head"><div class="num">40</div><div class="stem"><span class="m" dir="ltr"><span class="frac"><b>5</b><b>3</b></span> × <span class="frac"><b>12</b><b>15</b></span> = <span class="blank"></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 40">
+    <label class="ch"><input type="radio" name="q39" value="0" data-c><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="frac"><b>4</b><b>3</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q39" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="frac"><b>3</b><b>4</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q39" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="frac"><b>17</b><b>18</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q39" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="frac"><b>60</b><b>15</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong><span class="m" dir="ltr"><span class="frac"><b>5 × 12</b><b>3 × 15</b></span> = <span class="frac"><b>60</b><b>45</b></span> = <span class="frac"><b>4</b><b>3</b></span></span>.</div></div>
+  <div class="card" id="q40"><div class="q-head"><div class="num">41</div><div class="stem"><span class="m" dir="ltr"><span class="frac"><b>1</b><b>8</b></span> ÷ 0.<span class="ov">1</span> = <span class="blank"></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 41">
+    <label class="ch"><input type="radio" name="q40" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="frac"><b>8</b><b>9</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q40" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">1.25</span></span></span></label>
+    <label class="ch"><input type="radio" name="q40" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="frac"><b>1</b><b>72</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q40" value="3" data-c><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="frac"><b>9</b><b>8</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong><span class="m" dir="ltr">0.<span class="ov">1</span> = <span class="frac"><b>1</b><b>9</b></span></span>, so <span class="m" dir="ltr"><span class="frac"><b>1</b><b>8</b></span> ÷ <span class="frac"><b>1</b><b>9</b></span> = <span class="frac"><b>1</b><b>8</b></span> × 9 = <span class="frac"><b>9</b><b>8</b></span></span>. (1.25 is the answer for ÷ 0.1, not ÷ <span class="m" dir="ltr">0.<span class="ov">1</span></span>.)</div></div>
+  <h2 class="sec">Page 6 · Answer the following</h2>
+  <div class="card" id="q41"><div class="q-head"><div class="num">42</div><div class="stem">Find in the simplest form the value of: <span class="m" dir="ltr">(<span class="frac"><b>3</b><b>5</b></span> + <span class="frac"><b>−1</b><b>5</b></span>) ÷ <span class="frac"><b>4</b><b>10</b></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 42">
+    <label class="ch"><input type="radio" name="q41" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="frac"><b>4</b><b>25</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q41" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">1</span></span></span></label>
+    <label class="ch"><input type="radio" name="q41" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="frac"><b>1</b><b>2</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q41" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">2</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m" dir="ltr"><span class="frac"><b>2</b><b>5</b></span> ÷ <span class="frac"><b>4</b><b>10</b></span> = <span class="frac"><b>2</b><b>5</b></span> × <span class="frac"><b>10</b><b>4</b></span> = 1</span>.</div></div>
+  <div class="card" id="q42"><div class="q-head"><div class="num">43</div><div class="stem">If <span class="m" dir="ltr">A = −2, B = 3</span>, what is the value of <span class="m" dir="ltr">(A + B) − (A × B)</span>?</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 43">
+    <label class="ch"><input type="radio" name="q42" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">−5</span></span></span></label>
+    <label class="ch"><input type="radio" name="q42" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">5</span></span></span></label>
+    <label class="ch"><input type="radio" name="q42" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">7</span></span></span></label>
+    <label class="ch"><input type="radio" name="q42" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">−7</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m" dir="ltr">(1) − (−6) = 1 + 6 = 7</span>.</div></div>
+  <div class="card" id="q43"><div class="q-head"><div class="num">44</div><div class="stem">If <span class="m" dir="ltr"><i>a</i> = |−4|, <i>b</i> = −3</span>. What is the value of <span class="m" dir="ltr"><i>ab</i></span>?</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 44">
+    <label class="ch"><input type="radio" name="q43" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">12</span></span></span></label>
+    <label class="ch"><input type="radio" name="q43" value="1" data-c><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">−12</span></span></span></label>
+    <label class="ch"><input type="radio" name="q43" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">1</span></span></span></label>
+    <label class="ch"><input type="radio" name="q43" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">−7</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: B. </strong><span class="m" dir="ltr"><i>a</i> = 4</span>, so <span class="m" dir="ltr"><i>ab</i> = 4 × (−3) = −12</span>.</div></div>
+  <div class="card" id="q44"><div class="q-head"><div class="num">45</div><div class="stem">If <span class="m" dir="ltr"><i>a</i> = 3, <i>b</i> = 8, <i>c</i> = −7</span>. Find in simplest form: <span class="m" dir="ltr">(2<i>a</i> + <i>b</i>) ÷ <i>c</i></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 45">
+    <label class="ch"><input type="radio" name="q44" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">2</span></span></span></label>
+    <label class="ch"><input type="radio" name="q44" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="frac"><b>−11</b><b>7</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q44" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">−2</span></span></span></label>
+    <label class="ch"><input type="radio" name="q44" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">−1</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong><span class="m" dir="ltr">(6 + 8) ÷ (−7) = 14 ÷ (−7) = −2</span>.</div></div>
+  <div class="card" id="q45"><div class="q-head"><div class="num">46</div><div class="stem">If <span class="m" dir="ltr"><i>a</i> = 10, <i>b</i> = −5</span>, find: <span class="mb" dir="ltr"><span class="m" dir="ltr"><span class="nw">(a) |<i>ab</i>|</span>  <span class="nw">(b) |<i>b</i> + <i>a</i>|</span>  <span class="nw">(c) 15 ÷ <i>b</i></span></span></span></div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 46">
+    <label class="ch"><input type="radio" name="q45" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="nw">(a) −50</span>  <span class="nw">(b) 5</span>  <span class="nw">(c) −3</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q45" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="nw">(a) 50</span>  <span class="nw">(b) 15</span>  <span class="nw">(c) 3</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q45" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="nw">(a) 50</span>  <span class="nw">(b) 5</span>  <span class="nw">(c) 3</span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q45" value="3" data-c><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="nw">(a) 50</span>  <span class="nw">(b) 5</span>  <span class="nw">(c) −3</span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong><span class="m" dir="ltr">|10 × (−5)| = 50</span>, <span class="m" dir="ltr">|−5 + 10| = 5</span>, <span class="m" dir="ltr">15 ÷ (−5) = −3</span>.</div></div>
+  <div class="card" id="q46"><div class="q-head"><div class="num">47</div><div class="stem">If <span class="m" dir="ltr"><i>x</i> = <span class="frac"><b>−2</b><b>4</b></span>, <i>y</i> = <span class="frac"><b>4</b><b>9</b></span></span>, find <span class="m" dir="ltr">2<i>x</i> + <i>y</i></span> in its simplest form.</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 47">
+    <label class="ch"><input type="radio" name="q46" value="0" data-c><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="frac"><b>−5</b><b>9</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q46" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr"><span class="frac"><b>5</b><b>9</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q46" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">0</span></span></span></label>
+    <label class="ch"><input type="radio" name="q46" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="frac"><b>−13</b><b>9</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: A. </strong><span class="m" dir="ltr">2 × <span class="frac"><b>−2</b><b>4</b></span> = −1</span>, and <span class="m" dir="ltr">−1 + <span class="frac"><b>4</b><b>9</b></span> = <span class="frac"><b>−5</b><b>9</b></span></span>.</div></div>
+  <div class="card" id="q47"><div class="q-head"><div class="num">48</div><div class="stem">Two integers have a product of <span class="m" dir="ltr">(−25)</span> and a sum of zero. What are the two numbers?</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 48">
+    <label class="ch"><input type="radio" name="q47" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr">25, −1</span></span></span></label>
+    <label class="ch"><input type="radio" name="q47" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">−25, 1</span></span></span></label>
+    <label class="ch"><input type="radio" name="q47" value="2" data-c><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr">5, −5</span></span></span></label>
+    <label class="ch"><input type="radio" name="q47" value="3"><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr">−5, −5</span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: C. </strong>Sum zero means the numbers are opposites, and <span class="m" dir="ltr">5 × (−5) = −25</span>.</div></div>
+  <div class="card" id="q48"><div class="q-head"><div class="num">49</div><div class="stem">What is the multiplicative inverse of <span class="m" dir="ltr">3<span class="frac"><b>1</b><b>2</b></span></span>?</div></div>
+   <div class="opts" role="radiogroup" aria-label="Question 49">
+    <label class="ch"><input type="radio" name="q48" value="0"><span class="opt"><span class="let">A</span><span><span class="m" dir="ltr"><span class="frac"><b>7</b><b>2</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q48" value="1"><span class="opt"><span class="let">B</span><span><span class="m" dir="ltr">−3<span class="frac"><b>1</b><b>2</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q48" value="2"><span class="opt"><span class="let">C</span><span><span class="m" dir="ltr"><span class="frac"><b>1</b><b>7</b></span></span></span></span></label>
+    <label class="ch"><input type="radio" name="q48" value="3" data-c><span class="opt"><span class="let">D</span><span><span class="m" dir="ltr"><span class="frac"><b>2</b><b>7</b></span></span></span></span></label>
+   </div>
+   <div class="why"><strong class="pre">Correct answer: D. </strong><span class="m" dir="ltr">3<span class="frac"><b>1</b><b>2</b></span> = <span class="frac"><b>7</b><b>2</b></span></span>, and <span class="m" dir="ltr"><span class="frac"><b>7</b><b>2</b></span> × <span class="frac"><b>2</b><b>7</b></span> = 1</span>. <span class="m" dir="ltr">−3<span class="frac"><b>1</b><b>2</b></span></span> is the additive inverse.</div></div>
+  </div>
+
+  <div class="card nojs" id="njResult">
+    <div class="who">Your result</div>
+    <div class="score"><span class="sc"></span></div>
+    <p>Answered: <span class="an"></span></p>
+    <input type="text" placeholder="Write your name here" autocomplete="off" aria-label="Student name">
+    <p><strong>Take a screenshot of this result and send it to your teacher.</strong></p>
+    <p>Green shows the correct answer. Red shows a wrong choice.</p>
+  </div>
+
+  <div class="card" id="submitCard">
+    <p class="msg" id="msg"></p>
+    <button class="primary jsonly" onclick="submitTest()">Submit my answers</button>
+    <label for="finish" class="primary njBtn nojs">Show my result</label>
+  </div>
+</main>
+<footer>Choose the correct answer for each question, press Submit, then send your result to your teacher.</footer>
+
+<script>
+/* ---- teacher settings: fill these in to receive results directly ---- */
+var TEACHER_WHATSAPP='';   // digits only with country code, e.g. 9665XXXXXXXX (leave empty: student picks the chat)
+var TEACHER_EMAIL='';      // e.g. teacher@example.com
+var TEST_TITLE='Grade 7 - October Revision';
+var TEST_ID='grade7-oct-revision';
+
+var L=['A','B','C','D'], finished=false, attempt=1, reportText='';
+var quiz=document.getElementById('quiz');
+var cards=quiz.querySelectorAll('.card'), N=cards.length;
+
+function inputsOf(i){return cards[i].querySelectorAll('input');}
+function pickedOf(i){var a=inputsOf(i),k;for(k=0;k<a.length;k++){if(a[k].checked)return k;}return -1;}
+function correctOf(i){var a=inputsOf(i),k;for(k=0;k<a.length;k++){if(a[k].hasAttribute('data-c'))return k;}return -1;}
+
+function updateBar(){
+  var c=0,i;
+  for(i=0;i<N;i++){if(pickedOf(i)>=0){c++;cards[i].classList.remove('missing');}}
+  document.getElementById('barFill').style.width=(c/N*100)+'%';
+  document.getElementById('barText').textContent=c+' of '+N+' answered';
+}
+quiz.addEventListener('change',updateBar);
+
+function submitTest(){
+  var msg=document.getElementById('msg'), first=-1, left=0, i;
+  var nameEl=document.getElementById('student');
+  if(!nameEl.value.replace(/\s/g,'')){
+    msg.textContent='Please write your name before submitting.';
+    msg.style.display='block';
+    window.scrollTo(0,0); nameEl.focus();
+    return;
+  }
+  for(i=0;i<N;i++){
+    var miss=pickedOf(i)<0;
+    cards[i].classList.toggle('missing',miss);
+    if(miss){left++; if(first<0)first=i;}
+  }
+  if(left){
+    msg.textContent='You still have '+left+' question'+(left>1?'s':'')+' to answer.';
+    msg.style.display='block';
+    cards[first].scrollIntoView();
+    return;
+  }
+  msg.style.display='none';
+  finished=true;
+  var score=0, parts=[];
+  for(i=0;i<N;i++){
+    var p=pickedOf(i), c=correctOf(i), ok=p===c; if(ok)score++;
+    var w=cards[i].querySelector('.why');
+    w.classList.toggle('bad',!ok);
+    w.querySelector('.pre').textContent=ok?'Correct. ':'Correct answer: '+L[c]+'. ';
+    parts.push((i+1)+L[p]+(ok?'\u2713':'\u2717('+L[c]+')'));
+  }
+  quiz.classList.add('graded');
+  var pct=Math.round(score/N*100);
+  var name=nameEl.value.replace(/^\s+|\s+$/g,'');
+  document.getElementById('who').textContent=name;
+  document.getElementById('score').textContent=score+' / '+N+'  ('+pct+'%)';
+  document.getElementById('note').textContent=
+    pct===100?'Excellent! Full marks.':
+    pct>=80?'Very good work. Check the questions marked in red.':
+    pct>=50?'Good try. Read the explanations and try again.':
+    'Keep practising. Read each explanation below, then try again.';
+  buildReport(score,pct,name,parts);
+  var sm=document.getElementById('saveMsg'); sm.textContent='Saving your result\u2026';
+  Portal.saveResult({testId:TEST_ID,score:score,total:N,percent:pct,attempt:attempt,answers:parts.join(' ')},function(r){
+    sm.textContent=r&&r.ok?'Your result is saved.':'Your result could not be saved. Please send it to your teacher with the buttons below.';
+  });
+  document.getElementById('result').style.display='block';
+  document.getElementById('submitCard').style.display='none';
+  document.getElementById('progress').style.display='none';
+  window.scrollTo(0,0);
+}
+
+function restart(){
+  var all=quiz.querySelectorAll('input'), k;
+  for(k=0;k<all.length;k++){all[k].checked=false;}
+  finished=false; attempt++;
+  quiz.classList.remove('graded');
+  updateBar();
+  document.getElementById('result').style.display='none';
+  document.getElementById('submitCard').style.display='block';
+  document.getElementById('progress').style.display='block';
+  window.scrollTo(0,0);
+}
+
+function buildReport(score,pct,name,parts){
+  var d=new Date();
+  reportText=TEST_TITLE+'\nStudent: '+name+'\nScore: '+score+' / '+N+' ('+pct+'%)\nAttempt: '+attempt+
+    '\nDate: '+d.toLocaleDateString()+' '+d.toLocaleTimeString()+'\nAnswers: '+parts.join('  ');
+  document.getElementById('report').value=reportText;
+  var enc=encodeURIComponent(reportText);
+  document.getElementById('waBtn').href='https://wa.me/'+TEACHER_WHATSAPP.replace(/\D/g,'')+'?text='+enc;
+  document.getElementById('mailBtn').href='mailto:'+TEACHER_EMAIL+'?subject='+encodeURIComponent(TEST_TITLE+' - '+name)+'&body='+enc;
+  document.getElementById('shareBtn').style.display=navigator.share?'':'none';
+  document.getElementById('sendMsg').textContent='';
+}
+function shareResult(){
+  if(navigator.share){navigator.share({title:TEST_TITLE,text:reportText}).then(function(){},function(){});}
+}
+function copyResult(){
+  var t=document.getElementById('report'), out=document.getElementById('sendMsg');
+  function done(){out.textContent='Copied. Paste it in a message to your teacher.';}
+  function fallback(){
+    t.focus();t.select();
+    try{t.setSelectionRange(0,99999);}catch(e){}
+    try{if(document.execCommand('copy')){done();return;}}catch(e){}
+    out.textContent='Press and hold the text in the box, then choose Copy.';
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(reportText).then(done,fallback);}
+  else{fallback();}
+}
+updateBar();
+if(typeof PORTAL_SESSION!=='undefined'&&PORTAL_SESSION){
+  var st=document.getElementById('student'); st.value=PORTAL_SESSION.name; st.readOnly=true;
+  document.getElementById('whoami').textContent='Signed in as '+PORTAL_SESSION.name;
+}
+</script>
+</body>
+</html>
